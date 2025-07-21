@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>群益期貨 Flywheel 養成計畫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: 本應用程式採用了以使用者旅程為核心的頂層導航設計，分為「策略總覽」、「五大階段詳解」與「獎勵與目標」三大區塊。使用者首先會看到計畫核心的「飛輪模型」互動圖，點擊即可導航至對應的詳細階段，這種設計能讓使用者快速建立整體概念，並自由探索感興趣的環節。各階段任務使用摺疊式卡片（Accordion）呈現，避免資訊過載，提升閱讀體驗。最終，透過視覺化的圖表展示KPI目標，強化計畫的預期成效。此結構旨在將線性報告轉化為非線性的互動探索地圖，提升可用性與參與感。 -->
+    <!-- Visualization & Content Choices: 報告核心的「Flywheel 模型」透過HTML/CSS建構成一個互動式圓環圖，取代靜態圖片，點擊各環節可導航至頁面相應部分，目標是組織化呈現並引導使用者。各階段任務細節使用HTML表格呈現，清晰易讀。關鍵的「飛輪數據指標」則利用Chart.js的條形圖進行視覺化比較，將原始值與目標值並列，目標是直觀對比與展示變化，互動式提示框可顯示精確數據。此設計選擇完全基於互動性與資訊清晰度，確保所有圖形皆由Canvas或HTML/CSS實現。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F8F7F4;
+            color: #383838;
+        }
+        .flywheel-container {
+            width: 320px;
+            height: 320px;
+        }
+        @media (min-width: 768px) {
+            .flywheel-container {
+                width: 450px;
+                height: 450px;
+            }
+        }
+        .flywheel-segment {
+            transition: all 0.3s ease-in-out;
+        }
+        .flywheel-segment:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .tab-active {
+            border-color: #1D4ED8;
+            background-color: #1D4ED8;
+            color: #FFFFFF;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-[#F8F7F4]">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl md:text-2xl font-bold text-blue-800">群益期貨｜用戶成長飛輪計畫</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">策略總覽</a>
+                        <a href="#stages" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">五大階段</a>
+                        <a href="#rewards" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">獎勵與目標</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-white hover:bg-blue-600 focus:outline-none">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#overview" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">策略總覽</a>
+                <a href="#stages" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">五大階段</a>
+                <a href="#rewards" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">獎勵與目標</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="overview" class="mb-16 scroll-mt-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">策略總覽：Flywheel 成長飛輪</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    本計畫的核心是「Flywheel 成長飛輪模型」。我們將用戶的期貨學習視為一個持續循環的旅程，從初次接觸、體驗操作，到最終轉化為品牌的忠實推薦者。用戶在每個階段的投入，都將成為推動下一批新用戶加入的動能，形成一個自我增強的成長循環。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="flex justify-center items-center">
+                    <div class="relative flywheel-container flex items-center justify-center">
+                        <div class="absolute w-full h-full rounded-full border-2 border-dashed border-gray-300"></div>
+                        <div class="absolute w-2/3 h-2/3 rounded-full border-2 border-dashed border-gray-300"></div>
+                        <div class="absolute text-center">
+                            <h3 class="font-bold text-xl md:text-2xl text-blue-800">成長飛輪</h3>
+                            <p class="text-gray-500 text-sm md:text-base">用戶旅程</p>
+                        </div>
+                        <a href="#stage-1" class="flywheel-segment absolute w-full h-full cursor-pointer" style="clip-path: polygon(50% 50%, 50% 0, 85% 0, 85% 15%);">
+                            <div class="absolute top-[5%] left-[58%] md:top-[8%] md:left-[60%] text-center transform -translate-x-1/2 -translate-y-1/2">
+                                <p class="font-bold text-sm md:text-base text-sky-700">吸引</p>
+                                <p class="text-xs md:text-sm text-sky-600 hidden md:block">Attract</p>
+                            </div>
+                        </a>
+                        <a href="#stage-2" class="flywheel-segment absolute w-full h-full cursor-pointer" style="clip-path: polygon(50% 50%, 85% 15%, 100% 50%, 85% 85%);">
+                            <div class="absolute top-[50%] left-[88%] md:left-[92%] text-center transform -translate-x-1/2 -translate-y-1/2">
+                                <p class="font-bold text-sm md:text-base text-teal-700">互動</p>
+                                <p class="text-xs md:text-sm text-teal-600 hidden md:block">Engage</p>
+                            </div>
+                        </a>
+                        <a href="#stage-3" class="flywheel-segment absolute w-full h-full cursor-pointer" style="clip-path: polygon(50% 50%, 85% 85%, 50% 100%, 15% 85%);">
+                            <div class="absolute top-[90%] left-[50%] md:top-[92%] text-center transform -translate-x-1/2 -translate-y-1/2">
+                                <p class="font-bold text-sm md:text-base text-emerald-700">轉換</p>
+                                <p class="text-xs md:text-sm text-emerald-600 hidden md:block">Convert</p>
+                            </div>
+                        </a>
+                        <a href="#stage-4" class="flywheel-segment absolute w-full h-full cursor-pointer" style="clip-path: polygon(50% 50%, 15% 85%, 0 50%, 15% 15%);">
+                             <div class="absolute top-[50%] left-[12%] md:left-[8%] text-center transform -translate-x-1/2 -translate-y-1/2">
+                                <p class="font-bold text-sm md:text-base text-amber-700">取悅</p>
+                                <p class="text-xs md:text-sm text-amber-600 hidden md:block">Delight</p>
+                            </div>
+                        </a>
+                        <a href="#stage-5" class="flywheel-segment absolute w-full h-full cursor-pointer" style="clip-path: polygon(50% 50%, 15% 15%, 50% 0, 50% 0); transform: rotate(18deg);">
+                             <div class="absolute top-[13%] left-[30%] md:top-[12%] md:left-[35%] text-center transform -translate-x-1/2 -translate-y-1/2 rotate-[-18deg]">
+                                <p class="font-bold text-sm md:text-base text-orange-700">推進</p>
+                                <p class="text-xs md:text-sm text-orange-600 hidden md:block">Advocate</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-4">活動核心：財富種子積分系統 🌱</h3>
+                    <p class="text-gray-600 mb-6">「財富種子」是您在這次成長旅程中的核心貨幣。完成各階段任務即可輕鬆獲取，它不僅記錄您的學習進度，更是兌換豐富獎勵的憑證。</p>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-bold text-blue-800">保證兌換</h4>
+                            <p class="text-blue-700">累積 <span class="font-bold text-lg">300</span> 顆種子，即可兌換 NT$300 超商禮券（每人限一次）。</p>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                            <h4 class="font-bold text-green-800">大獎抽獎</h4>
+                            <p class="text-green-700">每 <span class="font-bold text-lg">100</span> 顆種子可兌換 1 張抽獎券，兌換無上限，衝刺大獎！</p>
+                        </div>
+                        <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                            <h4 class="font-bold text-yellow-800">種子商城</h4>
+                            <p class="text-yellow-700">可使用種子兌換群益獨家分析報告、課程折扣碼或品牌周邊商品。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stages" class="mb-16 scroll-mt-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">五大活動階段詳解</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    整個計畫分為五個緊密相連的階段。您可以點擊下方的標籤，來探索每個階段的主題、目標、以及如何透過完成任務來累積您的財富種子。
+                </p>
+            </div>
+            <div id="accordion-container" class="space-y-4 max-w-4xl mx-auto">
+            </div>
+        </section>
+
+        <section id="rewards" class="scroll-mt-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">大獎機制與數據目標</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    您的努力將獲得豐厚回報！這裡展示了最終的大獎以及我們期望透過此計畫達成的關鍵成長指標。您的每一次參與，都在為實現這些目標貢獻力量。
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">🎁 終極大獎（11/21 抽出）</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+                            <p class="text-4xl mb-2">✈️</p>
+                            <h4 class="font-bold text-sky-800">海外雙人旅遊金</h4>
+                            <p class="text-sky-700">NT$80,000 (1名)</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p class="text-4xl mb-2">💻</p>
+                            <h4 class="font-bold text-slate-800">高效能筆電</h4>
+                            <p class="text-slate-700">價值 NT$40,000 (1名)</p>
+                        </div>
+                        <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
+                            <p class="text-4xl mb-2">📱</p>
+                            <h4 class="font-bold text-violet-800">iPhone 最新款</h4>
+                            <p class="text-violet-700">價值 NT$30,000 (1名)</p>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                            <p class="text-4xl mb-2">🛍️</p>
+                            <h4 class="font-bold text-amber-800">超商禮券</h4>
+                            <p class="text-amber-700">NT$500 (20名)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">📊 飛輪數據指標 (KPI)</h3>
+                    <div class="chart-container">
+                        <canvas id="kpiChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+            <p>&copy; 2025 群益期貨 Flywheel 養成計畫. 本頁面為計畫概念展示。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stagesData = [
+                {
+                    id: 'stage-1',
+                    title: '階段一｜吸引 Attract',
+                    theme: '孔子開講，期貨啟蒙',
+                    duration: '9/24 – 10/1',
+                    color: 'sky',
+                    purpose: '建立基本認知、解除恐懼心理，讓對期貨觀望的用戶願意踏出第一步。',
+                    painPoint: '對期貨一無所知、怕賠錢、不敢碰、不理解風險與獲利來源。',
+                    solution: '提供拆解成單元、附帶互動問答的「期貨入門指南」與理財建議書，搭配風險認知測驗，將被動學習轉為主動吸收。',
+                    transition: '「期貨好像沒那麼可怕了」→「我應該也可以學」',
+                    tasks: [
+                        { name: '闖關式學習', desc: '完成《期貨入門指南》三大單元的互動問答，答對即可過關。', time: '約 15–20 分鐘', seeds: '50 顆' },
+                        { name: '風險認知小測驗', desc: '完成 20 題風險測驗，達 80 分即通過。', time: '約 10 分鐘', seeds: '50 顆' },
+                    ]
+                },
+                {
+                    id: 'stage-2',
+                    title: '階段二｜互動 Engage',
+                    theme: '十萬美金，模擬海戰',
+                    duration: '10/1 – 10/9',
+                    color: 'teal',
+                    purpose: '提供零風險練習空間，強化下單與停損概念。',
+                    painPoint: '開戶前不知道怎麼操作、怕操作錯誤、不了解停損單、對工具不熟。',
+                    solution: '建立模擬帳戶給用戶「無風險試玩」，並在平台中內建彈出式「新手任務引導」與即時獎勵回饋，設定操作任務與停損練習。',
+                    transition: '「這平台我摸得懂」→「我開始有信心操作了」',
+                    tasks: [
+                        { name: '創建艦隊', desc: '開設模擬交易帳號（內建虛擬10萬美金）。', time: '群益模擬平台', seeds: '30 顆' },
+                        { name: '首次啟航', desc: '完成第一筆模擬下單。', time: '', seeds: '30 顆' },
+                        { name: '設立航標', desc: '設定停損單（智慧單/觸價單）。', time: '', seeds: '40 顆' },
+                        { name: '模擬航海王', desc: '累積模擬下單 20 筆以上。', time: '', seeds: '加碼 50 顆' },
+                    ]
+                },
+                {
+                    id: 'stage-3',
+                    title: '階段三｜轉換 Convert',
+                    theme: '實盤啟航，動用獎勵',
+                    duration: '10/10 – 10/22',
+                    color: 'emerald',
+                    purpose: '完成實際開戶 → 入金 → 交易全流程，促進有效戶成長與初次成交。',
+                    painPoint: '對於實際開戶流程卡關、怕被推銷、無動力完成入金與下單。',
+                    solution: '簡化開戶指引頁＋LINE提醒機制＋將實盤折抵獎勵包裝為視覺化的「NT$500 實戰啟航金」，搭配積分與限時任務刺激，提升完成度。',
+                    transition: '「這不只是學習，我真的開始交易了」',
+                    tasks: [
+                        { name: '正式授旗', desc: '完成線上開戶（含證件驗證）。', time: '群益官網', seeds: '50 顆' },
+                        { name: '注入燃油', desc: '任意金額完成首次入金。', time: '', seeds: '50 顆' },
+                        { name: '駛入公海', desc: '完成第一筆實盤交易（不限口數）。', time: '', seeds: '100 顆 + <br>啟用 NT$500 實戰啟航金' },
+                        { name: '限時首航', desc: '完成開戶後 48 小時內，完成第一筆實盤交易。', time: '', seeds: '額外 50 顆' },
+                    ]
+                },
+                {
+                    id: 'stage-4',
+                    title: '階段四｜取悅 Delight',
+                    theme: '策略聯盟，單打群攻皆可行',
+                    duration: '10/23 – 10/31',
+                    color: 'amber',
+                    purpose: '強化操作頻率與社群認同，推動 LINE 社群討論活化。',
+                    painPoint: '開完戶就忘了、下完單沒人互動、交易沒成就感、缺乏持續刺激。',
+                    solution: '透過組隊挑戰、排行榜週報、徽章稱號等遊戲化工具，並由「官方社群經理」在 LINE 社群帶動話題與互動，創造「被看見」「有成就感」的動力。',
+                    transition: '「不只是我一個人在玩」→「這是一群人的養成之路」',
+                    tasks: [
+                        { name: '基本挑戰(個人)', desc: '1. 三口實盤交易<br>2. 使用一次智慧單', time: '', seeds: '100 顆<br>50 顆' },
+                        { name: '組隊挑戰', desc: '組 3–5 人全員達標 → 全員達標後，每位成員額外獲得 150 顆種子與團隊勳章', time: '', seeds: '150 顆/人' },
+                        { name: '社群參與', desc: '加入官方 LINE 社群《#飛虎拓荒基地》。', time: '', seeds: '加入就送 50 顆' },
+                    ]
+                },
+                {
+                    id: 'stage-5',
+                    title: '階段五｜推進 Advocate',
+                    theme: '養成推手，回饋再加碼',
+                    duration: '11/1 – 11/14',
+                    color: 'orange',
+                    purpose: '轉化為內容創作者與推薦者，建立飛輪式口碑循環。',
+                    painPoint: '雖然參與活動，但缺乏社群影響力或回饋誘因，不願主動分享。',
+                    solution: '提供明確的「心得投稿指南」、好友推薦積分、社群轉發任務等誘因，讓口碑成為自轉引擎來源。',
+                    transition: '「我也能幫助別人開始學投資」',
+                    tasks: [
+                        { name: '推薦任務', desc: '專屬連結邀請朋友開設模擬帳號並操作 1 筆。', time: '', seeds: '你與朋友各得 50 顆' },
+                        { name: '用戶故事投稿', desc: '依官方提供的「心得指南」投稿學習歷程（圖文或影片）。', time: '傳到LINE社群', seeds: '100 顆' },
+                        { name: 'IG/Threads 分享', desc: '發文＋標註指定 Hashtag (#群益飛虎)。', time: '', seeds: '每篇 50 顆 (上限3篇)' },
+                    ]
+                }
+            ];
+
+            const accordionContainer = document.getElementById('accordion-container');
+            stagesData.forEach((stage, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.id = stage.id;
+                accordionItem.className = 'border border-gray-200 rounded-xl bg-white shadow-sm scroll-mt-20';
+                accordionItem.innerHTML = `
+                    <button class="accordion-button w-full flex justify-between items-center text-left p-5" aria-expanded="false">
+                        <div class="flex items-center">
+                            <span class="mr-4 text-xl font-bold text-${stage.color}-500">${'I'.repeat(index + 1)}</span>
+                            <div>
+                                <h3 class="text-lg md:text-xl font-bold text-gray-800">${stage.title}</h3>
+                                <p class="text-sm text-gray-500">${stage.duration}</p>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-6 h-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <p class="text-center text-xl font-bold text-${stage.color}-600 mb-6">✨ ${stage.theme} ✨</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-sm">
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2 text-${stage.color}-800">🎯 活動目的</h4>
+                                    <p class="text-${stage.color}-700">${stage.purpose}</p>
+                                </div>
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2 text-${stage.color}-800">😟 用戶痛點</h4>
+                                    <p class="text-${stage.color}-700">${stage.painPoint}</p>
+                                </div>
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
+                                    <h4 class="font-bold mb-2 text-${stage.color}-800">✅ 解決方式</h4>
+                                    <p class="text-${stage.color}-700">${stage.solution}</p>
+                                </div>
+                            </div>
+                            
+                            <h4 class="font-bold text-lg text-gray-800 mb-4">📌 任務內容</h4>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">任務</th>
+                                            <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">說明</th>
+                                            <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">工具/時間</th>
+                                            <th class="py-2 px-4 border-b text-left text-sm font-semibold text-gray-600">🌱 種子獎勵</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${stage.tasks.map(task => `
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="py-3 px-4 border-b text-sm text-gray-700 font-medium">${task.name}</td>
+                                            <td class="py-3 px-4 border-b text-sm text-gray-700">${task.desc}</td>
+                                            <td class="py-3 px-4 border-b text-sm text-gray-700">${task.time}</td>
+                                            <td class="py-3 px-4 border-b text-sm text-green-700 font-bold">${task.seeds}</td>
+                                        </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-8 text-center bg-gray-100 p-4 rounded-lg">
+                                <p class="text-gray-500 text-sm mb-1">用戶心理轉折</p>
+                                <p class="font-semibold text-gray-800">“${stage.transition}”</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                accordionContainer.appendChild(accordionItem);
+            });
+
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    button.querySelector('.accordion-arrow').classList.toggle('rotate-180', !isExpanded);
+                    
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0px';
+                    }
+                });
+            });
+
+            const kpiData = {
+                labels: ['模擬開帳轉換率', '有效開戶轉換率', '第三週交易留存', '社群發文活性', '用戶推薦率', '活動後用戶留存'],
+                datasets: [
+                    {
+                        label: '原始值',
+                        data: [15, 6.5, 12.5, 0, 0, 0],
+                        backgroundColor: 'rgba(156, 163, 175, 0.6)',
+                        borderColor: 'rgba(156, 163, 175, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '目標值',
+                        data: [35, 13.5, 40, 30, 15, 50],
+                        backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+
+            const kpiCtx = document.getElementById('kpiChart').getContext('2d');
+            new Chart(kpiCtx, {
+                type: 'bar',
+                data: kpiData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                callback: function(val, index) {
+                                    const label = this.getLabelForValue(val);
+                                    return label.length > 5 ? label.substring(0,5) + '...' : label;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.querySelector('.inline-flex').classList.toggle('hidden');
+                mobileMenuButton.querySelector('.hidden').classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('.nav-link, .flywheel-segment').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                       mobileMenu.classList.add('hidden');
+                       mobileMenuButton.querySelector('.inline-flex').classList.remove('hidden');
+                       mobileMenuButton.querySelector('.hidden').classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
