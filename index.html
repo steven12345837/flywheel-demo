@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -48,6 +48,35 @@
                 rgba(167, 243, 208, 0.7) 120deg 240deg, /* teal-200 */
                 rgba(186, 230, 253, 0.7) 240deg 360deg /* sky-200 */
             );
+        }
+        /* Modal Styles */
+        .modal-body-content .card:hover {
+            transform: none;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+             border-color: #e5e7eb;
+        }
+         .modal-body-content .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #2563eb;
+            border-radius: 2px;
+        }
+        .faq-item details > summary {
+            list-style: none;
+        }
+        .faq-item details > summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item details[open] summary .arrow {
+            transform: rotate(180deg);
+        }
+        .arrow {
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
@@ -574,12 +603,248 @@
         </div>
     </footer>
 
+    <!-- Education Modal -->
+    <div id="educationModal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-4 border-b sticky top-0 bg-white rounded-t-lg">
+                <h3 class="text-xl font-bold text-gray-800">期貨啟蒙：新手的第一堂課</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+            </div>
+            <!-- Modal Body -->
+            <div class="overflow-y-auto p-6 md:p-10 modal-body-content">
+                <!-- Education Website Content STARTS here -->
+                <main>
+                     <!-- Hero Section -->
+                    <section class="text-center mb-12">
+                        <h1 class="text-3xl md:text-5xl font-black text-gray-900 leading-tight tracking-tight">
+                            子曰：「知之為知之，不知為不知。」<br class="hidden md:block">
+                            <span class="text-blue-600">是知也。</span>
+                        </h1>
+                        <p class="mt-6 text-lg text-gray-700 max-w-3xl mx-auto">
+                            投資之道，始於誠實面對自己的未知。在這裡，我們不談一夜致富的神話，只專注於為您建立最扎實、最穩健的期貨知識根基。
+                        </p>
+                    </section>
+
+                    <!-- Section 1: Why Learn? (為何而學) -->
+                    <section id="modal-why" class="mb-16 scroll-mt-24">
+                        <div class="text-center">
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 section-title tracking-tight">為何而學？解心中之惑</h2>
+                            <p class="mt-8 text-gray-600 max-w-2xl mx-auto">您是否也曾對市場感到困惑？這些是我們聽過最多的心聲。</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="card bg-gray-50 p-6 rounded-xl text-center border">
+                                <div class="flex justify-center items-center h-16 w-16 bg-blue-100 rounded-full mx-auto">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mt-6">「聽說期貨很危險？」</h3>
+                                <p class="mt-4 text-gray-600"><b>例如：</b>「新聞上都說誰誰誰玩期貨賠了一棟房子，那是不是只要一碰就會傾家蕩產？」<br><br><b>解惑：</b>危險來自於未知。我們將教您如何運用「停損」這道最強的護身符，讓風險永遠在您的掌控之中。</p>
+                            </div>
+                            <div class="card bg-gray-50 p-6 rounded-xl text-center border">
+                                <div class="flex justify-center items-center h-16 w-16 bg-blue-100 rounded-full mx-auto">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mt-6">「術語太多，有聽沒有懂？」</h3>
+                                <p class="mt-4 text-gray-600"><b>例如：</b>「什麼是『保證金』？『槓桿』又是什麼？『平倉』跟倉庫有關係嗎？光是聽這些名詞就一個頭兩個大。」<br><br><b>解惑：</b>我們用「每日一詞」白話文運動，將複雜概念轉化為您一聽就懂的生活比喻。</p>
+                            </div>
+                            <div class="card bg-gray-50 p-6 rounded-xl text-center border">
+                                <div class="flex justify-center items-center h-16 w-16 bg-blue-100 rounded-full mx-auto">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 12v-2m0 2v.01M12 12v2m0-2v.01M12 6v-1m0 1v.01M12 6v2m0-2v.01M7 7H6m11 0h1M7 17H6m11 0h1M12 18v-1m0 1v.01M12 18v2m0-2v.01M17 17v-1m0 1v.01M17 17v2m0-2v.01M7 12H6m1 0h.01M7 12h2m0-2H7m0 2h.01M17 12h-1m1 0h.01M17 12h2m0-2h-1m1 0h.01"></path></svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-900 mt-6">「怕辛苦錢一去不回？」</h3>
+                                <p class="mt-4 text-gray-600"><b>例如：</b>「我每天辛苦上班存的錢，是不是只要下錯一次單，就會全部消失不見？」<br><br><b>解惑：</b>所有偉大的旅程都始於練習。我們的「模擬實戰」讓您在零風險的環境中，找到自己的節奏，直到信心滿滿再出發。</p>
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Section 2: What is Futures? -->
+                    <section id="modal-what" class="mb-16 scroll-mt-24 bg-slate-50 py-16 rounded-2xl">
+                        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div class="order-2 md:order-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">期貨為何物？</h2>
+                                <p class="mt-4 text-gray-600 text-lg">一份「預購未來」的契約</p>
+                                <p class="mt-6 text-gray-600 leading-relaxed">
+                                    想像一台萬眾期待的PS5即將在三個月後上市，定價2萬元。您擔心到時候太搶手會漲價，於是現在就跟店家付了2千元訂金，簽下「預購單」，鎖定三個月後用2萬元的價格取貨的權利。
+                                    <br><br>
+                                    這張標準化的**「預購單」，就是「期貨」**。
+                                    <br><br>
+                                    它讓您（買方）能鎖定未來的購買成本，也讓店家（賣方）能提前掌握訂單。而專業的投資人，則可以透過買賣這張「預購單」的權利，來賺取中間的價差。
+                                </p>
+                            </div>
+                            <div class="order-1 md:order-2 text-center">
+                                <img src="https://placehold.co/400x300/e2e8f0/334155?text=PS5%E5%9C%96%E7%89%87" alt="預購限量版商品的意象圖" class="rounded-lg shadow-xl mx-auto">
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Section 3: Core Concepts -->
+                    <section id="modal-concepts" class="mb-16 scroll-mt-24">
+                        <div class="text-center">
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 section-title tracking-tight">核心之道：三大基石</h2>
+                            <p class="mt-8 text-gray-600 max-w-2xl mx-auto">掌握這三個核心概念，您就掌握了期貨世界的通行證。</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="card bg-white p-6 rounded-xl border">
+                                <h3 class="text-xl font-bold text-blue-700">一、保證金 (Margin)</h3>
+                                <p class="mt-2 text-gray-600"><b>譬如：預購單之訂金。</b><br>您不需要拿出2萬元的全部金額，只需支付2千元訂金（保證金），就能鎖定這筆交易。這讓您能以小搏大，但也需要更謹慎的資金控管。</p>
+                            </div>
+                            <div class="card bg-white p-6 rounded-xl border">
+                                <h3 class="text-xl font-bold text-blue-700">二、槓桿 (Leverage)</h3>
+                                <p class="mt-2 text-gray-600"><b>譬如：阿基米德之長竿。</b><br>您用2千元訂金，操作了價值2萬元的商品，這就是10倍的槓桿。若PS5漲價10%，您的獲利將是2千元，等於您的訂金翻了一倍！但若跌價，虧損也會同樣放大。</p>
+                            </div>
+                            <div class="card bg-white p-6 rounded-xl border">
+                                <h3 class="text-xl font-bold text-blue-700">三、多空雙向 (Long/Short)</h3>
+                                <p class="mt-2 text-gray-600"><b>譬如：水能載舟，亦能覆舟。</b><br>看好未來會漲價，您可以「作多」（買進預購單）。若您認為未來會跌價，也可以先「作空」（賣出預購單的權利），等價格下跌再買回。無論漲跌，都有機會。</p>
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Section 4: Products -->
+                    <section id="modal-products" class="mb-16 scroll-mt-24">
+                        <div class="text-center">
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 section-title tracking-tight">萬物可期：您的交易宇宙</h2>
+                            <p class="mt-8 text-gray-600 max-w-2xl mx-auto">從您每天關注的股市，到影響民生的原物料，期貨市場與我們的生活息息相關。</p>
+                        </div>
+                        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="card bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg">指數期貨</h4>
+                                <p class="text-sm text-gray-500 mt-1">如：小納斯達克(NQ)</p>
+                                <p class="text-sm mt-3"><b>時事連結：</b>NVIDIA公布超乎預期的財報，帶動納斯達克指數大漲。看懂科技巨頭，就能掌握指數脈動。</p>
+                            </div>
+                            <div class="card bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg">商品期貨</h4>
+                                <p class="text-sm text-gray-500 mt-1">如：黃金(GC)、輕原油(CL)</p>
+                                <p class="text-sm mt-3"><b>時事連結：</b>聯準會暗示降息，引發市場對通膨的預期，推升國際金價。黃金是觀察全球資金流向的重要指標。</p>
+                            </div>
+                            <div class="card bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg">外匯期貨</h4>
+                                <p class="text-sm text-gray-500 mt-1">如：歐元(6E)、日圓(6J)</p>
+                                <p class="text-sm mt-3"><b>時事連結：</b>日本央行干預匯市，造成日圓劇烈波動。出國旅遊換匯，其實您早已身處外匯市場之中。</p>
+                            </div>
+                            <div class="card bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold text-lg">個股期貨</h4>
+                                <p class="text-sm text-gray-500 mt-1">如：台積電(CDF)</p>
+                                <p class="text-sm mt-3"><b>時事連結：</b>台積電股價創下新高，但您擔心短期回檔？個股期貨讓您可以用更靈活的槓桿，進行多空操作。</p>
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Section 5: FAQ -->
+                    <section id="modal-faq" class="mb-16 scroll-mt-24">
+                        <div class="text-center">
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 section-title tracking-tight">新手解惑</h2>
+                            <p class="mt-8 text-gray-600 max-w-2xl mx-auto">我們整理了初學者最常見的幾個問題，為您一次解答。</p>
+                        </div>
+                        <div class="mt-12 max-w-3xl mx-auto space-y-4">
+                            <div class="faq-item bg-white rounded-lg border">
+                                <details>
+                                    <summary class="p-6 cursor-pointer flex justify-between items-center">
+                                        <span class="font-semibold text-lg">Q1: 期貨跟股票，到底差在哪裡？</span>
+                                        <span class="arrow"><svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                                    </summary>
+                                    <div class="p-6 pt-0 text-gray-600 leading-relaxed">
+                                        最大的差別在於：買股票，您是成為那家公司的「股東」；而買期貨，您是買賣一張「未來的合約」。這導致了幾個關鍵不同：<br>1. **所有權**：股票有所有權，期貨沒有。<br>2. **槓桿**：期貨自帶槓桿，股票通常沒有。<br>3. **多空**：期貨作空非常方便，股票則有較多限制。<br>4. **到期日**：期貨合約有到期日，需要換月；股票沒有。
+                                    </div>
+                                </details>
+                            </div>
+                            <div class="faq-item bg-white rounded-lg border">
+                                <details>
+                                    <summary class="p-6 cursor-pointer flex justify-between items-center">
+                                        <span class="font-semibold text-lg">Q2: 我會不會賠光所有的錢，甚至負債？</span>
+                                        <span class="arrow"><svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                                    </summary>
+                                    <div class="p-6 pt-0 text-gray-600 leading-relaxed">
+                                        這正是「風險控制」最重要的原因。在群益，我們有完善的風險警示系統，更重要的是，我們會在您入門的第一天，就教您如何設定「停損單」。停損單就像是汽車的安全氣囊，能在虧損達到您設定的範圍時，自動幫您出場，保護您的本金。一個有紀律的交易者，永遠不會讓自己陷入無法控制的虧損中。
+                                    </div>
+                                </details>
+                            </div>
+                             <div class="faq-item bg-white rounded-lg border">
+                                <details>
+                                    <summary class="p-6 cursor-pointer flex justify-between items-center">
+                                        <span class="font-semibold text-lg">Q3: 是不是需要很多錢才能開始？</span>
+                                        <span class="arrow"><svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                                    </summary>
+                                    <div class="p-6 pt-0 text-gray-600 leading-relaxed">
+                                        這是一個常見的誤解。現在有許多「小型」或「微型」的期貨合約，它們的保證金要求相對較低。例如，交易一口微型那斯達克期貨，所需的保證金可能比買一張台積電股票還要少。我們的「飛輪養成計畫」會從模擬交易開始，讓您在完全了解之前，一分錢都不用投入。
+                                    </div>
+                                </details>
+                            </div>
+                             <div class="faq-item bg-white rounded-lg border">
+                                <details>
+                                    <summary class="p-6 cursor-pointer flex justify-between items-center">
+                                        <span class="font-semibold text-lg">Q4: 我需要每天盯盤嗎？</span>
+                                        <span class="arrow"><svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                                    </summary>
+                                    <div class="p-6 pt-0 text-gray-600 leading-relaxed">
+                                        完全不需要。現代的交易工具非常強大，群益提供了多種「智慧單」，例如停損單、移動停損單、二擇一單(OCO)等。您可以在下單的同時，就設定好出場的條件。設定完畢後，您就可以安心地去工作或休息，讓系統為您監控市場，執行您的策略。
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+                <!-- Education Website Content ENDS here -->
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+            // --- MODAL CONTROL SCRIPT ---
+            const educationModal = document.getElementById('educationModal');
+            const closeModalButton = document.getElementById('closeModal');
+            
+            // Function to open modal
+            const openModal = () => {
+                educationModal.classList.remove('hidden');
+                educationModal.classList.add('flex');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            };
+
+            // Function to close modal
+            const closeModal = () => {
+                educationModal.classList.add('hidden');
+                educationModal.classList.remove('flex');
+                document.body.style.overflow = ''; // Restore background scrolling
+            };
+
+            // Event listener for the open button (delegated to body)
+            document.body.addEventListener('click', function(event) {
+                if (event.target.id === 'openEducationModal') {
+                    openModal();
+                }
+            });
+
+            // Event listener for the close button
+            closeModalButton.addEventListener('click', closeModal);
+
+            // Event listener to close modal when clicking on the background overlay
+            educationModal.addEventListener('click', (event) => {
+                if (event.target.id === 'educationModal') {
+                    closeModal();
+                }
+            });
+
+            // Script for FAQ accordion inside the modal
+            const details = document.querySelectorAll('.faq-item details');
+            details.forEach(detail => {
+                detail.addEventListener('toggle', function() {
+                    if (this.open) {
+                        details.forEach(otherDetail => {
+                            if (otherDetail !== this && otherDetail.open) {
+                                otherDetail.removeAttribute('open');
+                            }
+                        });
+                    }
+                });
+            });
+            // --- END OF MODAL SCRIPT ---
             
             // Data for the five stages accordion
             const stagesData = [
-                { id: 'stage-1', title: '階段一｜吸引 Attract', theme: '孔子開講，期貨啟蒙', duration: '9/24 – 10/1', color: 'sky', purpose: '建立基本認知、解除恐懼心理，讓對期貨觀望的用戶願意踏出第一步。', painPoint: '對期貨一無所知、怕賠錢、不敢碰、不理解風險與獲利來源。', solution: '提供拆解成單元、附帶互動問答的「期貨入門指南」，搭配風險認知測驗，將被動學習轉為主動吸收。下一章，我們將帶您進入模擬戰場，選擇您感興趣的領域，親手體驗市場的脈動！', transition: '「期貨好像沒那麼可怕了」→「我應該也可以學」', tasks: [ { name: '闖關式學習', desc: '完成《期貨入門指南》三大單元的互動問答，答對即可過關。', time: '約 15–20 分鐘', seeds: '30 顆' }, { name: '風險認知小測驗', desc: '完成 20 題風險測驗，達 80 分即通過。', time: '約 10 分鐘', seeds: '30 顆' }, ] },
+                { id: 'stage-1', title: '階段一｜吸引 Attract', theme: '孔子開講，期貨啟蒙', duration: '9/24 – 10/1', color: 'sky', purpose: '建立基本認知、解除恐懼心理，讓對期貨觀望的用戶願意踏出第一步。', painPoint: '對期貨一無所知、怕賠錢、不敢碰、不理解風險與獲利來源。', solution: '我們為您準備了最扎實的「期貨入門指南」，將複雜術語轉化為簡單易懂的生活比喻。點擊下方按鈕，開始您的第一堂啟蒙課！<br><br><button id="openEducationModal" class="font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md transition-transform hover:scale-105">開啟我的期貨第一課</button>', transition: '「期貨好像沒那麼可怕了」→「我應該也可以學」', tasks: [ { name: '闖關式學習', desc: '完成《期貨入門指南》三大單元的互動問答，答對即可過關。', time: '約 15–20 分鐘', seeds: '30 顆' }, { name: '風險認知小測驗', desc: '完成 20 題風險測驗，達 80 分即通過。', time: '約 10 分鐘', seeds: '30 顆' }, ] },
                 { id: 'stage-2', title: '階段二｜互動 Engage', theme: '三大戰場，擇你所愛', duration: '10/1 – 10/9', color: 'teal', purpose: '引導用戶根據自身興趣，選擇一個「主題戰場」進行模擬實戰，從而掌握通用於所有市場的交易技巧，並理解不同商品間的微妙連動關係。', painPoint: '市場商品太多，不知從何下手？只聽過科技股，但對黃金、外匯等全球脈動一竅不通？', solution: '我們為您開闢了三大戰場：【科技前線】、【能源風暴】、【貨幣戰爭】。您可以選擇最熟悉或最感興趣的領域開始，每個戰場都有專屬的英雄商品與對應的期貨關聯。熟悉一個，就能觸類旁通所有。', transition: '「原來不只科技股，黃金和油價也這麼刺激！」→「我開始建立自己的全球市場觀察雷達了」', tasks: [ { name: '登入模擬戰情室', desc: '申請並登入群益CTA模擬交易帳號。', time: '群益CTA平台', seeds: '20 顆' }, { name: '選擇你的主戰場', desc: '從「科技(如NVIDIA)」、「能源(如輕原油)」、「貨幣(如歐元)」三大戰場中，任選一個完成首次模擬下單。', time: '', seeds: '30 顆' }, { name: '偵查期貨規格', desc: '前往群益官網，查詢你主戰場對應的「期貨商品」（如：小納斯達克/輕原油/歐元），並回答一個關於合約規格的簡單問題。', time: '群益官網', seeds: '40 顆' }, { name: '設立防線', desc: '學會設定停損單，為你的模擬倉位做好風險控管。', time: '', seeds: '30 顆' }, { name: '風控練習簿', desc: '在交易中，學會如何停損，遠比一次的獲利更重要。分享您練習停損的紀錄，這是在為您的資金建立最強大的防護網！', time: '截圖分享', seeds: '60 顆' }, { name: '跨界探索', desc: '挑戰一個你「主戰場以外」的商品，完成一筆模擬下單。', time: '', seeds: '40 顆' }, ] },
                 { id: 'stage-3', title: '階段三｜轉換 Convert', theme: '實盤啟航，知識變現', duration: '10/10 – 10/22', color: 'emerald', purpose: '將模擬階段學到的知識，轉化為真實的行動。透過高額的開戶獎勵，強力推動用戶完成從入金到實盤交易的完整流程。', painPoint: '模擬交易跟實盤感覺不一樣？開戶流程好麻煩，沒有動力完成。', solution: '您在前兩階段的努力，將在此刻化為最實質的回饋！完成開戶是獲取 300 元禮券的最後一哩路，也是您從學員變身為實戰交易者的關鍵一步。', transition: '「原來我真的看懂期貨了」→「這不只是學習，我真的開始交易了」', tasks: [ { name: '正式授旗', desc: '完成線上開戶（含證件驗證），這是您解鎖 300 元禮券的關鍵任務！', time: '群益官網', seeds: '130 顆' }, { name: '注入燃油', desc: '任意金額完成首次入金。', time: '', seeds: '50 顆' }, { name: '首航大捷', desc: '完成您的第一筆實盤交易（不限口數），立即領取豐厚種子獎勵，為您的交易之旅注入強力動能！', time: '', seeds: '150 顆' }, { name: '加入實戰社群', desc: '恭喜開戶！立即加入官方 LINE 社群《#飛虎拓荒基地》，與戰友們交流。', time: '限開戶後加入', seeds: '50 顆' }, { name: '限時首航', desc: '完成開戶後 48 小時內，完成第一筆實盤交易。', time: '', seeds: '50 顆' }, ], advantages: [ { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h10l-1-1-0.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`, title: '頂尖交易工具', description: '最新上線的群益贏家PRO、群益行動贏家、掌中財神等多款APP任您挑選，更有24小時交易室隨時待命，不怕斷線或系統問題。' }, { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`, title: '獨家投顧報告', description: '每年僅需百元費用，即可享有專業研究員團隊提供的獨家投顧報告，讓您的交易決策有更強力的數據後盾。' }, { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`, title: '專業實戰社群', description: '加入我們重視風控、拒絕雜訊的實戰社群《#飛虎拓荒基地》，與真正的交易者為伍，共同成長。' } ] },
                 { id: 'stage-4', title: '階段四｜取悅 Delight', theme: '策略聯盟，專業升級', duration: '10/23 – 10/31', color: 'amber', purpose: '強化操作頻率與社群認同，並為高潛力客戶提供一條通往專業投資的進階路徑，實現客戶價值最大化。', painPoint: '交易一段時間後遇到瓶頸、需要更專業的市場資訊、希望與同好有更深度的交流。', solution: '除了透過組隊挑戰維持交易熱度，我們更為積極的交易者，提供了升級為專業投資顧問服務客戶的機會，獲取獨家的研究報告與市場洞察。', transition: '「我不只是一個散戶，我能接觸到更專業的資源」', tasks: [ { name: '基本挑戰(個人)', desc: '1. 三口實盤交易<br>2. 使用一次智慧單', time: '', seeds: '100 顆<br>50 顆' }, { name: '組隊挑戰', desc: '組 3–5 人全員達標 → 全員達標後，每位成員額外獲得 150 顆種子與團隊勳章', time: '', seeds: '150 顆/人' }, { name: '專業投資者升級', desc: '簽署投顧契約，解鎖群益獨家投顧報告閱覽權限，讓您的交易決策有更強力的後盾！', time: '線上簽署', seeds: '200 顆' }, ] },
@@ -647,6 +912,18 @@
                 button.addEventListener('click', () => {
                     const content = button.nextElementSibling;
                     const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                    
+                    // Close all other accordions
+                    if (!isExpanded) {
+                        accordionButtons.forEach(otherButton => {
+                            if (otherButton !== button) {
+                                otherButton.setAttribute('aria-expanded', 'false');
+                                otherButton.nextElementSibling.style.maxHeight = '0px';
+                                otherButton.querySelector('.accordion-arrow').classList.remove('rotate-180');
+                            }
+                        });
+                    }
+
                     button.setAttribute('aria-expanded', !isExpanded);
                     button.querySelector('.accordion-arrow').classList.toggle('rotate-180', !isExpanded);
                     if (!isExpanded) {
@@ -763,4 +1040,5 @@
     </script>
 </body>
 </html>
+
 
