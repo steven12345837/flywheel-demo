@@ -15,24 +15,19 @@
             background-color: #F8F7F4;
             color: #383838;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height: 0.5s ease-in-out;
+            transition: max-height 0.5s ease-in-out;
         }
         .tab-active {
+            border-color: #1D4ED8;
+            color: #1D4ED8;
+            font-weight: 600;
+        }
+        .strategy-tab-active {
             background-color: #1D4ED8;
             color: #FFFFFF;
-            border-color: #1D4ED8;
         }
         .journey-step {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -41,18 +36,18 @@
             transform: translateY(-8px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        .flywheel-graphic {
-            width: 350px;
-            height: 350px;
+        /* Flywheel styles */
+        .flywheel-container {
+            width: 380px;
+            height: 380px;
         }
-        @media (min-width: 768px) {
-            .flywheel-graphic {
-                width: 450px;
-                height: 450px;
-            }
-        }
-        .flywheel-graphic .segment {
-            clip-path: polygon(100% 0, 100% 100%, 50% 100%, 50% 0);
+        .flywheel-bg {
+            background: conic-gradient(
+                from -30deg,
+                rgba(253, 230, 138, 0.7) 0deg 120deg, /* amber-200 */
+                rgba(167, 243, 208, 0.7) 120deg 240deg, /* teal-200 */
+                rgba(186, 230, 253, 0.7) 240deg 360deg /* sky-200 */
+            );
         }
     </style>
 </head>
@@ -67,13 +62,11 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#overview" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">成長路徑</a>
-                        <a href="#flywheel-model" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">飛輪模型</a>
-                        <a href="#stages" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">五大階段</a>
-                        <a href="#strategy" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">戰略方針</a>
-                        <a href="#execution-plan" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">執行計畫</a>
-                        <a href="#board-report" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">董事會報告</a>
-                        <a href="#rewards" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">獎勵目標</a>
+                        <a href="#overview" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">成長路徑</a>
+                        <a href="#stages" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">活動詳情</a>
+                        <a href="#leaderboard" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">戰績排行</a>
+                        <a href="#rewards" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">活動大獎</a>
+                        <a href="#internal-strategy" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">內部策略</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -90,12 +83,10 @@
         <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#overview" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">成長路徑</a>
-                <a href="#flywheel-model" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">飛輪模型</a>
-                <a href="#stages" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">五大階段</a>
-                <a href="#strategy" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">戰略方針</a>
-                <a href="#execution-plan" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">執行計畫</a>
-                <a href="#board-report" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">董事會報告</a>
-                <a href="#rewards" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">獎勵目標</a>
+                <a href="#stages" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">活動詳情</a>
+                <a href="#leaderboard" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">戰績排行</a>
+                <a href="#rewards" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">活動大獎</a>
+                <a href="#internal-strategy" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">內部策略</a>
             </div>
         </div>
     </header>
@@ -113,12 +104,11 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                <!-- NEW: Journey Map -->
+                <!-- Journey Map -->
                 <div class="w-full">
                     <div class="relative">
                         <!-- Journey Steps -->
                         <div class="grid grid-cols-2 gap-4">
-                            <!-- Step 1 -->
                             <a href="#stage-1" class="journey-step bg-white p-4 rounded-xl shadow-md border border-gray-200 text-center">
                                 <div class="flex justify-center items-center h-12 w-12 bg-sky-100 rounded-full mx-auto">
                                     <svg class="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.747-8.247l11.494 0M4.253 12l15.494 0"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.747-8.247l11.494 0M4.253 12l15.494 0M12 6.253a6 6 0 016 6v3.247a6 6 0 01-12 0V12a6 6 0 016-6z"></path></svg>
@@ -126,7 +116,6 @@
                                 <h3 class="font-bold mt-3 text-gray-800">1. 知識學習</h3>
                                 <p class="text-sm text-gray-500">打好基礎</p>
                             </a>
-                            <!-- Step 2 -->
                             <a href="#stage-2" class="journey-step bg-white p-4 rounded-xl shadow-md border border-gray-200 text-center">
                                 <div class="flex justify-center items-center h-12 w-12 bg-teal-100 rounded-full mx-auto">
                                    <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 8.25l4.5 4.5m0 0l-4.5 4.5M14.25 12.75L9.75 17.25M3.75 12a8.25 8.25 0 1116.5 0 8.25 8.25 0 01-16.5 0z"></path></svg>
@@ -134,7 +123,6 @@
                                 <h3 class="font-bold mt-3 text-gray-800">2. 模擬實戰</h3>
                                 <p class="text-sm text-gray-500">無風險練習</p>
                             </a>
-                            <!-- Step 4 (visually bottom-left) -->
                              <a href="#stage-4" class="journey-step bg-white p-4 rounded-xl shadow-md border border-gray-200 text-center">
                                 <div class="flex justify-center items-center h-12 w-12 bg-orange-100 rounded-full mx-auto">
                                     <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962a3.752 3.752 0 01-4.498-1.584 3 3 0 014.682-2.72m7.5-2.962V7.5a3 3 0 00-3-3h-1.5M6.038 16.5a3 3 0 01-4.498-1.584 3 3 0 014.682-2.72m5.06-5.062a3.752 3.752 0 011.584 4.498 3 3 0 01-2.72 4.682 3.752 3.752 0 01-4.498-1.584 3 3 0 012.72-4.682z"></path></svg>
@@ -142,7 +130,6 @@
                                 <h3 class="font-bold mt-3 text-gray-800">4. 社群成長</h3>
                                 <p class="text-sm text-gray-500">成為高手</p>
                             </a>
-                            <!-- Step 3 (visually bottom-right) -->
                             <a href="#stage-3" class="journey-step bg-white p-4 rounded-xl shadow-md border border-gray-200 text-center">
                                 <div class="flex justify-center items-center h-12 w-12 bg-emerald-100 rounded-full mx-auto">
                                     <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"></path></svg>
@@ -154,18 +141,15 @@
                         <!-- Arrows -->
                         <div class="absolute inset-0 flex items-center justify-center -z-10">
                             <div class="w-full h-full">
-                                <!-- H Arrow -->
                                 <svg class="absolute top-1/4 left-0 w-full h-1" viewBox="0 0 100 1" preserveAspectRatio="none"><path d="M 25 0.5 L 75 0.5" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="4 4" fill="none"></path><path d="M 75 0.5 L 70 0" stroke="#D1D5DB" stroke-width="2"></path><path d="M 75 0.5 L 70 1" stroke="#D1D5DB" stroke-width="2"></path></svg>
-                                <!-- V Arrow -->
                                 <svg class="absolute left-1/2 top-0 h-full w-1" viewBox="0 0 1 100" preserveAspectRatio="none"><path d="M 0.5 75 L 0.5 25" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="4 4" fill="none"></path><path d="M 0.5 75 L 0 70" stroke="#D1D5DB" stroke-width="2"></path><path d="M 0.5 75 L 1 70" stroke="#D1D5DB" stroke-width="2"></path></svg>
-                                 <!-- H Arrow Bottom -->
                                 <svg class="absolute bottom-1/4 left-0 w-full h-1" viewBox="0 0 100 1" preserveAspectRatio="none"><path d="M 75 0.5 L 25 0.5" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="4 4" fill="none"></path><path d="M 25 0.5 L 30 0" stroke="#D1D5DB" stroke-width="2"></path><path d="M 25 0.5 L 30 1" stroke="#D1D5DB" stroke-width="2"></path></svg>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- UPDATED Points System -->
+                <!-- Points System -->
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
                     <h3 class="text-2xl font-bold text-blue-900 mb-4">如何使用您的財富種子 🌱</h3>
                     <p class="text-gray-600 mb-6">完成任務累積的「財富種子」是您兌換獎勵的唯一憑證，規則清晰：</p>
@@ -178,63 +162,6 @@
                             <h4 class="font-bold text-green-800 text-lg">第二重：終極大獎抽獎券</h4>
                             <p class="text-green-700 mt-1">當您的種子總數<span class="font-bold text-green-900">超過 300 顆</span>後，每增加 <span class="font-bold text-xl text-green-900">100</span> 顆種子，即可為您自動兌換 <span class="font-bold text-xl text-green-900">1</span> 張終極大獎的抽獎券，累積無上限！</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- NEW Section: Flywheel Model -->
-        <section id="flywheel-model" class="mb-16 scroll-mt-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">飛輪模型解析</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    我們的核心戰略採用「飛輪模型」。此模型將客戶置於中心，透過「吸引、互動、取悅」三個階段的持續優化，讓滿意的客戶成為推薦新客戶的核心動能，形成一個自我加速的增長循環。
-                </p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div class="flex items-center justify-center">
-                    <div class="relative flywheel-graphic rounded-full flex items-center justify-center animate-spin [animation-duration:20s]">
-                        <!-- Segments -->
-                        <div class="absolute w-full h-full">
-                            <div class="absolute w-full h-full segment" style="transform: rotate(0deg);"><div class="absolute w-1/2 h-full bg-sky-200/50 right-0 rounded-r-full"></div></div>
-                            <div class="absolute w-full h-full segment" style="transform: rotate(120deg);"><div class="absolute w-1/2 h-full bg-teal-200/50 right-0 rounded-r-full"></div></div>
-                            <div class="absolute w-full h-full segment" style="transform: rotate(240deg);"><div class="absolute w-1/2 h-full bg-amber-200/50 right-0 rounded-r-full"></div></div>
-                        </div>
-                        <!-- Center -->
-                        <div class="relative w-40 h-40 md:w-56 md:h-56 bg-white rounded-full flex items-center justify-center text-center shadow-xl">
-                            <div>
-                                <h3 class="text-2xl md:text-3xl font-bold text-blue-800">客戶</h3>
-                                <p class="text-sm text-gray-500">Customers</p>
-                            </div>
-                        </div>
-                        <!-- Labels -->
-                        <div class="absolute w-full h-full text-center" style="transform: rotate(60deg);">
-                            <div class="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 font-bold text-sky-800">吸引 <span class="hidden md:inline">Attract</span></div>
-                        </div>
-                        <div class="absolute w-full h-full text-center" style="transform: rotate(180deg);">
-                            <div class="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 font-bold text-teal-800">互動 <span class="hidden md:inline">Engage</span></div>
-                        </div>
-                         <div class="absolute w-full h-full text-center" style="transform: rotate(300deg);">
-                            <div class="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 font-bold text-amber-800">取悅 <span class="hidden md:inline">Delight</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border">
-                        <h4 class="font-bold text-lg text-sky-700">吸引 (Attract)</h4>
-                        <p class="text-gray-600 mt-1">我們透過「三大戰場」等有趣、有價值的內容，吸引對投資感興趣的陌生人，讓他們成為我們的訪客。</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border">
-                        <h4 class="font-bold text-lg text-teal-700">互動 (Engage)</h4>
-                        <p class="text-gray-600 mt-1">透過「模擬實戰」和「社群任務」，我們與訪客建立信任，幫助他們解決問題，最終引導他們成為完成開戶的客戶。</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border">
-                        <h4 class="font-bold text-lg text-amber-700">取悅 (Delight)</h4>
-                        <p class="text-gray-600 mt-1">藉由「專業投顧升級」和「大使計畫」等服務，我們超越客戶的期待，讓他們從滿意的客戶，轉變為樂於分享的品牌推薦人。</p>
-                    </div>
-                     <div class="bg-white p-4 rounded-lg shadow-sm border">
-                        <h4 class="font-bold text-lg text-gray-700">動能 vs. 摩擦力</h4>
-                        <p class="text-gray-600 mt-1">推薦人產生的口碑就是飛輪的**動能**。而我們所有的「新手體驗優化策略」，都是為了消除複雜流程、不良溝通等**摩擦力**，讓飛輪轉得更快、更順暢。</p>
                     </div>
                 </div>
             </div>
@@ -265,17 +192,17 @@
                 <!-- Tabs -->
                 <div class="mb-6 border-b border-gray-200">
                     <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                        <button id="tab-individual" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <button data-tab-group="leaderboard" id="tab-individual" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
                             個人種子排行
                         </button>
-                        <button id="tab-team" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        <button data-tab-group="leaderboard" id="tab-team" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
                             團隊總力排行
                         </button>
                     </nav>
                 </div>
 
                 <!-- Individual Leaderboard Panel -->
-                <div id="panel-individual" class="tab-panel">
+                <div id="panel-individual" class="tab-panel" data-tab-group="leaderboard">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <h4 class="text-sm font-bold text-blue-800">您目前的種子數</h4>
@@ -294,7 +221,7 @@
                 </div>
 
                 <!-- Team Leaderboard Panel -->
-                <div id="panel-team" class="tab-panel hidden">
+                <div id="panel-team" class="tab-panel hidden" data-tab-group="leaderboard">
                     <div class="overflow-x-auto">
                         <table class="min-w-full">
                             <thead>
@@ -305,7 +232,6 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <!-- Placeholder data for team leaderboard -->
                                 <tr>
                                     <td class="py-4 px-5 text-lg font-bold text-amber-500">1</td>
                                     <td class="py-4 px-5 font-medium text-gray-900">華爾街之狼隊</td>
@@ -321,16 +247,6 @@
                                     <td class="py-4 px-5 font-medium text-gray-900">石油大亨俱樂部</td>
                                     <td class="py-4 px-5 text-gray-500 font-semibold">13,500</td>
                                 </tr>
-                                <tr>
-                                    <td class="py-4 px-5 text-sm font-medium text-gray-500">4</td>
-                                    <td class="py-4 px-5 font-medium text-gray-900">歐元捍衛者</td>
-                                    <td class="py-4 px-5 text-gray-500 font-semibold">11,900</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4 px-5 text-sm font-medium text-gray-500">5</td>
-                                    <td class="py-4 px-5 font-medium text-gray-900">飛虎隊</td>
-                                    <td class="py-4 px-5 text-gray-500 font-semibold">10,500</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -338,296 +254,317 @@
             </div>
         </section>
 
-        <!-- Section 4: Strategic Memo -->
-        <section id="strategy" class="mb-16 scroll-mt-16">
+        <!-- Section 4: Rewards -->
+        <section id="rewards" class="mb-16 scroll-mt-16">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">戰略方針</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">終極大獎</h2>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    本計畫不僅是行銷活動，更是公司長期的客戶增長戰略。以下為本次計畫的核心指導原則與商業目標。
+                    您的努力將獲得豐厚回報！累積抽獎券，就有機會贏得我們為您準備的終極大獎！
                 </p>
             </div>
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200 space-y-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-4">一、 精準的客戶分群與ROI預估</h3>
-                    <p class="text-gray-600 mb-6">我們的「三大戰場」是資源配置的戰略地圖。我們將潛在客戶分為三類，並依此制定預算投放策略：</p>
-                    <div class="space-y-6">
-                        <!-- Customer Persona A -->
-                        <div class="bg-sky-50 p-5 rounded-lg border border-sky-200">
-                            <h4 class="font-bold text-lg text-sky-800">客戶畫像A：「科技前線」的趨勢追逐者</h4>
-                            <ul class="mt-2 list-disc list-inside text-sky-700 space-y-1">
-                                <li><b>特徵：</b>年輕，熟悉科技話題，風險偏好高，追求短期回報。</li>
-                                <li><b>獲客成本 (CAC)：</b><span class="font-bold text-green-600">低</span>。易於透過數位廣告和遊戲化活動觸及。</li>
-                                <li><b>生命週期價值 (LTV)：</b><span class="font-bold text-orange-600">不穩定</span>。交易頻率高但持續性存疑。</li>
-                                <li><b>ROI評估：</b>短期ROI高，是啟動飛輪的絕佳燃料，但需警惕高流失率風險。</li>
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">🎁 終極大獎（11/21 抽出）</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                    <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+                        <p class="text-4xl mb-2">✈️</p>
+                        <h4 class="font-bold text-sky-800">海外雙人旅遊金</h4>
+                        <p class="text-sky-700">NT$80,000 (1名)</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <p class="text-4xl mb-2">💻</p>
+                        <h4 class="font-bold text-slate-800">高效能筆電</h4>
+                        <p class="text-slate-700">價值 NT$40,000 (1名)</p>
+                    </div>
+                    <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
+                        <p class="text-4xl mb-2">📱</p>
+                        <h4 class="font-bold text-violet-800">iPhone 最新款</h4>
+                        <p class="text-violet-700">價值 NT$30,000 (1名)</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                        <p class="text-4xl mb-2">🛍️</p>
+                        <h4 class="font-bold text-amber-800">超商禮券</h4>
+                        <p class="text-amber-700">NT$500 (20名)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Internal Strategy -->
+        <section id="internal-strategy" class="scroll-mt-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">內部策略計畫書</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    此區域為內部參考文件，包含計畫的核心策略、執行方案與商業目標。
+                </p>
+            </div>
+            <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
+                <!-- Strategy Tabs -->
+                <div class="mb-6 border-b border-gray-200">
+                    <nav class="flex flex-wrap -mb-px" aria-label="Strategy Tabs">
+                        <button data-tab-group="strategy" id="strategy-tab-1" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            飛輪模型
+                        </button>
+                        <button data-tab-group="strategy" id="strategy-tab-2" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            戰略方針
+                        </button>
+                        <button data-tab-group="strategy" id="strategy-tab-3" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            體驗優化
+                        </button>
+                        <button data-tab-group="strategy" id="strategy-tab-4" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            執行計畫
+                        </button>
+                        <button data-tab-group="strategy" id="strategy-tab-5" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            董事會報告
+                        </button>
+                         <button data-tab-group="strategy" id="strategy-tab-6" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            數據指標
+                        </button>
+                        <button data-tab-group="strategy" id="strategy-tab-7" class="strategy-tab-button whitespace-nowrap py-3 px-4 text-gray-600 hover:bg-gray-100 rounded-t-md font-medium text-base">
+                            成本與效益
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Strategy Panels -->
+                <div class="text-gray-700 leading-relaxed">
+                    <!-- REVISED: Visual Flywheel Panel -->
+                    <div id="strategy-panel-1" data-tab-group="strategy" class="strategy-tab-panel">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2 text-center">飛輪模型解析</h3>
+                        <div class="flex flex-col lg:flex-row items-center justify-center gap-8 py-4">
+                            <!-- Flywheel Graphic -->
+                            <div class="relative flywheel-container flex items-center justify-center">
+                                <div class="absolute w-full h-full rounded-full animate-spin [animation-duration:20s] [animation-timing-function:linear] flywheel-bg"></div>
+                                <!-- Labels Layer (not spinning) -->
+                                <div class="absolute w-full h-full">
+                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="transform: translate(-50%, -50%) rotate(0deg);">
+                                        <div class="font-bold text-sky-800 text-lg" style="transform: translate(100px) rotate(-90deg);">吸引 <span class="text-base font-medium">(Attract)</span></div>
+                                    </div>
+                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="transform: translate(-50%, -50%) rotate(120deg);">
+                                        <div class="font-bold text-teal-800 text-lg" style="transform: translate(100px) rotate(-90deg);">互動 <span class="text-base font-medium">(Engage)</span></div>
+                                    </div>
+                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="transform: translate(-50%, -50%) rotate(240deg);">
+                                         <div class="font-bold text-amber-800 text-lg" style="transform: translate(100px) rotate(-90deg);">取悅 <span class="text-base font-medium">(Delight)</span></div>
+                                    </div>
+                                </div>
+                                <!-- Center Circle -->
+                                <div class="relative w-40 h-40 bg-white rounded-full flex items-center justify-center text-center shadow-xl border-4 border-gray-100">
+                                    <div>
+                                        <h4 class="text-3xl font-bold text-blue-800">客戶</h4>
+                                        <p class="text-sm text-gray-500">Customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Descriptions -->
+                            <div class="space-y-4 max-w-md">
+                                <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+                                    <h4 class="font-bold text-lg text-sky-800">吸引 (Attract)</h4>
+                                    <p class="text-gray-600 mt-1">我們透過「三大戰場」等有趣、有價值的內容，吸引對投資感興趣的陌生人，讓他們成為我們的訪客。</p>
+                                </div>
+                                <div class="bg-teal-50 p-4 rounded-lg border border-teal-200">
+                                    <h4 class="font-bold text-lg text-teal-800">互動 (Engage)</h4>
+                                    <p class="text-gray-600 mt-1">透過「模擬實戰」和「社群任務」，我們與訪客建立信任，幫助他們解決問題，最終引導他們成為完成開戶的客戶。</p>
+                                </div>
+                                <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                    <h4 class="font-bold text-lg text-amber-800">取悅 (Delight)</h4>
+                                    <p class="text-gray-600 mt-1">藉由「專業投顧升級」和「大使計畫」等服務，我們超越客戶的期待，讓他們從滿意的客戶，轉變為樂於分享的品牌推薦人。</p>
+                                </div>
+                                <div class="bg-gray-100 p-4 rounded-lg border border-gray-300">
+                                    <h4 class="font-bold text-lg text-gray-800">動能 vs. 摩擦力</h4>
+                                    <p class="text-gray-600 mt-1">推薦人產生的口碑就是飛輪的**動能**。而我們所有的「新手體驗優化策略」，都是為了消除複雜流程、不良溝通等**摩擦力**，讓飛輪轉得更快、更順暢。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="strategy-panel-2" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">戰略方針</h3>
+                        <p class="mb-6">本計畫不僅是行銷活動，更是公司長期的客戶增長戰略。以下為本次計畫的核心指導原則與商業目標。</p>
+                        
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3 border-l-4 border-blue-500 pl-3">精準的客戶分群與ROI預估</h4>
+                        <p class="mb-4">我們的「三大戰場」是資源配置的戰略地圖。我們將潛在客戶分為三類，並依此制定預算投放策略：</p>
+                        <div class="space-y-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                            <p><strong>客戶畫像A：「科技前線」的趨勢追逐者</strong></p>
+                            <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>特徵：</strong> 年輕，熟悉科技話題，風險偏好高，追求短期回報。</li>
+                                <li><strong>獲客成本 (CAC)：</strong> <strong class="text-green-600">低</strong>。易於透過數位廣告和遊戲化活動觸及。</li>
+                                <li><strong>生命週期價值 (LTV)：</strong> <strong class="text-orange-600">不穩定</strong>。交易頻率高但持續性存疑。</li>
+                                <li><strong>ROI評估：</strong> 短期ROI高，是啟動飛輪的絕佳燃料，但需警惕高流失率風險。</li>
                             </ul>
                         </div>
-                        <!-- Customer Persona B -->
-                        <div class="bg-lime-50 p-5 rounded-lg border border-lime-200">
-                            <h4 class="font-bold text-lg text-lime-800">客戶畫像B：「能源風暴」的宏觀經濟信徒</h4>
-                            <ul class="mt-2 list-disc list-inside text-lime-700 space-y-1">
-                                <li><b>特徵：</b>有投資經驗，關注宏觀議題，交易相對穩健。</li>
-                                <li><b>獲客成本 (CAC)：</b><span class="font-bold text-yellow-600">中等</span>。需透過財經媒體等渠道進行深度內容行銷。</li>
-                                <li><b>生命週期價值 (LTV)：</b><span class="font-bold text-green-600">高</span>。交易週期長，資金規模穩定，是業務的基石。</li>
-                                <li><b>ROI評估：</b>長期ROI最高，是我們業務的核心優質客戶。</li>
+                        <div class="space-y-4 mb-4 p-4 bg-gray-50 rounded-lg">
+                             <p><strong>客戶畫像B：「能源風暴」的宏觀經濟信徒</strong></p>
+                            <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>特徵：</strong> 有投資經驗，關注宏觀議題，交易相對穩健。</li>
+                                <li><strong>獲客成本 (CAC)：</strong> <strong class="text-yellow-600">中等</strong>。需透過財經媒體等渠道進行深度內容行銷。</li>
+                                <li><strong>生命週期價值 (LTV)：</strong> <strong class="text-green-600">高</strong>。交易週期長，資金規模穩定，是業務的基石。</li>
+                                <li><strong>ROI評估：</strong> 長期ROI最高，是我們業務的核心優質客戶。</li>
                             </ul>
                         </div>
-                        <!-- Strategic Suggestion -->
-                        <div class="bg-gray-100 p-5 rounded-lg border border-gray-300">
-                            <h4 class="font-bold text-lg text-gray-800">戰略建議：預算配置</h4>
-                            <p class="mt-2 text-gray-700">基於上述分析，建議行銷預算以 <strong class="text-blue-700">60%</strong> 投放於A類客戶以求快速擴大活動聲量與初期開戶數；<strong class="text-blue-700">40%</strong> 投放於B類客戶，以確保能穩定獲取高生命週期價值的長期客戶。C類客群在此階段建議以自然觸及為主，不投入額外預算。</p>
-                        </div>
-                    </div>
-                </div>
+                        <blockquote class="border-l-4 border-blue-300 pl-4 py-2 my-4 bg-blue-50 text-blue-800">
+                            <strong>戰略建議：預算配置</strong><br>
+                            基於上述分析，建議行銷預算以 <strong>60%</strong> 投放於A類客戶以求快速擴大活動聲量與初期開戶數；<strong>40%</strong> 投放於B類客戶，以確保能穩定獲取高生命週期價值的長期客戶。C類客群在此階段建議以自然觸及為主，不投入額外預算。
+                        </blockquote>
 
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-4">二、 失敗數據的戰略價值</h3>
-                    <p class="text-gray-600 mb-6">「光榮的戰損回報」任務是我們的戰略級數據收集機制，目標是將客戶的每一次虧損，都轉化為我們優化服務的機會。</p>
-                    <div class="space-y-4">
-                         <div class="flex items-start">
-                            <span class="flex-shrink-0 h-6 w-6 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center mr-4">1</span>
-                            <p class="text-gray-700"><b>數據收集與標籤化：</b>社群經理需將用戶分享的停損單進行結構化標籤（#商品、#進場理由、#停損原因）。</p>
-                        </div>
-                        <div class="flex items-start">
-                             <span class="flex-shrink-0 h-6 w-6 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center mr-4">2</span>
-                            <p class="text-gray-700"><b>數據分析與洞察：</b>每週產出「新手陣亡報告」，分析死亡率最高的商品與最致命的交易模式。</p>
-                        </div>
-                        <div class="flex items-start">
-                             <span class="flex-shrink-0 h-6 w-6 bg-blue-600 text-white font-bold rounded-full flex items-center justify-center mr-4">3</span>
-                            <p class="text-gray-700"><b>戰略應用：</b>根據報告動態調整教學內容、觸發營業員進行精準客戶關懷、並作為優化交易軟體的依據。</p>
-                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mt-8 mb-3 border-l-4 border-blue-500 pl-3">失敗數據的戰略價值</h4>
+                        <p class="mb-4">「光榮的戰損回報」任務是我們的戰略級數據收集機制，目標是將客戶的每一次虧損，都轉化為我們優化服務的機會。</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li><strong>數據收集與標籤化：</strong> 社群經理需將用戶分享的停損單進行結構化標籤（#商品、#進場理由、#停損原因）。</li>
+                            <li><strong>數據分析與洞察：</strong> 每週產出「新手陣亡報告」，分析死亡率最高的商品與最致命的交易模式。</li>
+                            <li><strong>戰略應用：</strong> 根據報告動態調整教學內容、觸發營業員進行精準客戶關懷、並作為優化交易軟體的依據。</li>
+                        </ol>
                     </div>
-                </div>
-            </div>
-        </section>
+                    
+                    <div id="strategy-panel-3" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                         <h3 class="text-2xl font-bold text-gray-800 mb-4">新手體驗優化策略</h3>
+                         <p class="mb-6">為了確保新手用戶在活動前兩階段能獲得「簡單、有趣、安全」的絕佳體驗，我們將執行以下具體策略，以最大化用戶的參與感與留存率。</p>
+                         <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-2">如何讓體驗更「簡單」？—— 掃除一切摩擦力</h4>
+                                <p class="text-sm text-gray-500 italic mb-3">目標：讓用戶感覺「我好像天生就會」，而不是「我正在學習一個複雜的東西」。</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>策略1：</strong> 製作「30秒上手」動態教學圖 (GIF)。透過LINE或Email發送`如何登入`、`如何下單`、`如何設定停損`的短GIF。</li>
+                                    <li><strong>策略2：</strong> 推出「每日一詞」白話文運動。每天在社群用圖卡解釋一個術語（如：保證金＝租房押金）。</li>
+                                    <li><strong>策略3：</strong> 設計「新手專用儀表板」。在模擬平台引導中，暫時隱藏進階功能，只保留買、賣、停損三個核心按鈕。</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-2">如何讓體驗更「有趣」？—— 創造心流與驚喜</h4>
+                                <p class="text-sm text-gray-500 italic mb-3">目標：讓用戶從「為了獎勵做任務」的心態，轉變為「這個過程本身很好玩」。</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>策略1：</strong> 推出「每週特別任務」。例如「本週完成三筆歐元交易」，完成者可獲得額外種子。</li>
+                                    <li><strong>策略2：</strong> 舉辦「主題戰場週」。每週輪換一個主打戰場（如科技週），該週相關任務的種子獎勵加倍。</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-2">如何讓體驗更「安全」？—— 重新定義虧損的意義</h4>
+                                <p class="text-sm text-gray-500 italic mb-3">目標：讓用戶理解「風險是可控的」，並將「虧損」從負面懲罰轉化為正面學習過程。</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>策略1：</strong> 優化「戰損回報」的措辭。將任務名改為`風控練習簿`，強調「控制」而非「損失」。</li>
+                                    <li><strong>策略2：</strong> 建立「官方示範帳戶」。由社群經理公開操作模擬帳戶，並同時分享獲利與虧損的交易日誌，藉此「正常化虧損」。</li>
+                                    <li><strong>策略3：</strong> 增加「最小虧損挑戰」。設立`紀律的勳章`任務，獎勵能將虧損控制在1%以內停損出場的用戶。</li>
+                                </ul>
+                            </div>
+                         </div>
+                    </div>
 
-        <!-- Section 5: UX Optimization -->
-        <section id="ux-strategy" class="mb-16 scroll-mt-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">新手體驗優化策略</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    為了確保新手用戶在活動前兩階段能獲得「簡單、有趣、安全」的絕佳體驗，我們將執行以下具體策略，以最大化用戶的參與感與留存率。
-                </p>
-            </div>
-            <div class="max-w-4xl mx-auto space-y-8">
-                <!-- Simple -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">一、 如何讓體驗更「簡單」？—— 掃除一切摩擦力</h3>
-                    <p class="text-gray-600 mb-6">目標：讓用戶感覺「我好像天生就會」，而不是「我正在學習一個複雜的東西」。</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略1：製作「30秒上手」動態教學圖 (GIF)。</b>透過LINE或Email發送`如何登入`、`如何下單`、`如何設定停損`的短GIF，瞬間掃除操作未知軟體的恐懼。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略2：推出「每日一詞」白話文運動。</b>每天在社群用圖卡解釋一個術語（如：保證金＝租房押金），化整為零，降低學習壓力。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略3：設計「新手專用儀表板」。</b>在模擬平台引導中，暫時隱藏進階功能，只保留買、賣、停損三個核心按鈕，避免資訊過載。</div>
+                    <div id="strategy-panel-4" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">執行計畫</h3>
+                        <p class="mb-6">為確保計畫成功落地，我們已針對流量獲取、內容產製、社群運營及數據追蹤四個關鍵環節，制定了具體的執行方案。</p>
+                        <div class="space-y-4">
+                            <p><strong>媒體投放計畫 (Media Plan):</strong></p>
+                            <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>A類客戶 (趨勢追逐者):</strong> 主攻 Dcard 理財版、Instagram Reels 短影音廣告、大學生理財KOL合作。</li>
+                                <li><strong>B類客戶 (宏觀經濟信徒):</strong> 鎖定鉅亨網、工商時報、財經Podcast節目內容置入。</li>
+                                <li><strong>追蹤機制:</strong> 所有渠道投放的連結，都將植入UTM追蹤碼。</li>
+                            </ul>
+                            <p><strong>內容產製規劃 (Content Production):</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li>建立內容行事曆，由行銷部、設計部、社群經理分工合作產出「GIF教學」、「每日一詞圖卡」等內容。</li>
+                            </ul>
+                            <p><strong>社群經理SOP (Community Manager):</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>每日任務：</strong> 發布內容、回覆問題、審核任務。</li>
+                                <li><strong>每週任務：</strong> 發布週任務、整理數據報告。</li>
+                                <li><strong>資源配置：</strong> 需投入全職人力，高峰時段安排支援人力。</li>
+                            </ul>
+                             <p><strong>數據追蹤機制 (Data Tracking):</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li>建立從「廣告點擊(UTM)」到「完成首次交易」的完整用戶行為追蹤鏈路，確保能精準追蹤各階段轉換率。</li>
+                            </ul>
+                            <p><strong>附錄：「風控練習簿」任務執行SOP:</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li>明確定義用戶端（截圖、分享）與社群經理端（審核、獎勵、數據標籤化）的執行流程。</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <!-- Fun -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">二、 如何讓體驗更「有趣」？—— 創造心流與驚喜</h3>
-                    <p class="text-gray-600 mb-6">目標：讓用戶從「為了獎勵做任務」的心態，轉變為「這個過程本身很好玩」。</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略1：推出「每週特別任務」。</b>每週一於社群公佈該週的「特別任務」，例如「本週完成三筆歐元交易」或「成功使用一次移動停損單」。完成者可獲得額外種子，創造每週都有新目標的期待感。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略2：舉辦「主題戰場週」。</b>在階段二，每週輪換一個主打戰場（如科技週），該週相關任務的種子獎勵加倍，創造稀缺性與即時感。</div>
-                    </div>
-                </div>
-                <!-- Safe -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">三、 如何讓體驗更「安全」？—— 重新定義虧損的意義</h3>
-                    <p class="text-gray-600 mb-6">目標：讓用戶理解「風險是可控的」，並將「虧損」從負面懲罰轉化為正面學習過程。</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略1：優化「戰損回報」的措辭。</b>將任務名改為`風控練習簿`，強調「控制」而非「損失」，降低用戶的心理敏感度。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略2：建立「官方示範帳戶」。</b>由社群經理公開操作模擬帳戶，並同時分享獲利與虧損的交易日誌，藉此「正常化虧損」，降低新手的挫敗感。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>策略3：增加「最小虧損挑戰」。</b>設立`紀律的勳章`任務，獎勵能將虧損控制在1%以內停損出場的用戶，從根本上獎勵「紀律」而非「結果」。</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Section 6: Execution Plan -->
-        <section id="execution-plan" class="mb-16 scroll-mt-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">執行計畫</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    為確保計畫成功落地，我們已針對流量獲取、內容產製、社群運營及數據追蹤四個關鍵環節，制定了具體的執行方案。
-                </p>
-            </div>
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200 space-y-8">
-                <!-- Media Plan -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">一、 媒體投放計畫 (Media Plan)</h3>
-                    <p class="text-gray-600 mb-6">我們將針對不同客戶畫像，執行精準的渠道投放策略：</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-green-50 rounded-lg"><b>A類客戶 (趨勢追逐者)：</b>主攻年輕族群聚集地，如 <b>Dcard 理財版、Instagram Reels 短影音廣告、大學生理財KOL合作</b>。廣告素材強調「遊戲化」、「熱門話題 (NVIDIA)」、「低門檻」。</div>
-                        <div class="p-4 bg-green-50 rounded-lg"><b>B類客戶 (宏觀經濟信徒)：</b>鎖定專業財經內容平台，如 <b>鉅亨網、工商時報、財經Podcast節目內容置入</b>。廣告素材強調「避險」、「資產配置」、「專業分析」。</div>
-                        <div class="p-4 bg-green-50 rounded-lg"><b>追蹤機制：</b>所有渠道投放的連結，都將植入UTM追蹤碼，以精準監控各渠道的轉換成效。</div>
-                    </div>
-                </div>
-                <!-- Content Production -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">二、 內容產製規劃 (Content Production)</h3>
-                    <p class="text-gray-600 mb-6">活動所需的大量內容，將由內部團隊分工合作，並建立內容行事曆以確保產出效率：</p>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="py-2 px-4 text-left">內容項目</th>
-                                    <th class="py-2 px-4 text-left">負責單位</th>
-                                    <th class="py-2 px-4 text-left">產出頻率</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y">
-                                <tr><td class="py-2 px-4">「30秒上手」GIF教學</td><td class="py-2 px-4">行銷部 + 設計部</td><td class="py-2 px-4">活動前完成</td></tr>
-                                <tr><td class="py-2 px-4">「每日一詞」圖卡</td><td class="py-2 px-4">行銷部 (文案) + 設計部 (製圖)</td><td class="py-2 px-4">每日</td></tr>
-                                <tr><td class="py-2 px-4">「每週特別任務」公告</td><td class="py-2 px-4">社群經理</td><td class="py-2 px-4">每週</td></tr>
-                                <tr><td class="py-2 px-4">「官方示範帳戶」日誌</td><td class="py-2 px-4">社群經理</td><td class="py-2 px-4">每日</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Community Manager SOP -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">三、 社群經理SOP (Community Manager)</h3>
-                    <p class="text-gray-600 mb-6">社群經理是本計畫的靈魂人物，其核心職責與作業流程如下：</p>
-                     <ul class="list-disc list-inside text-gray-700 space-y-2">
-                        <li><b>每日任務：</b>發布「每日一詞」、分享「官方示範帳戶」日誌、回覆用戶問題、審核「風控練習簿」並給予鼓勵。</li>
-                        <li><b>每週任務：</b>發布「每週特別任務」、整理「新手陣亡報告」、與行銷團隊同步數據。</li>
-                        <li><b>資源配置：</b>此崗位需投入全職人力。在美股開盤等高峰時段，將安排一位行銷部同事作為支援，確保回覆即時性。</li>
-                    </ul>
-                </div>
-                 <!-- Data Tracking -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">四、 數據追蹤機制 (Data Tracking)</h3>
-                    <p class="text-gray-600 mb-6">為確保所有數據的準確性，我們將與IT部門合作，建立完整的用戶行為追蹤鏈路：</p>
-                    <p class="text-gray-700 bg-gray-100 p-4 rounded-lg">
-                        <b>用戶路徑：</b><br>
-                        廣告點擊 (UTM) → 活動登陸頁 → 加入LINE官方帳號 (綁定用戶ID) → 進入LINE社群 → 點擊開戶連結 (帶有用戶參數) → 完成開戶 → 完成首次交易。
-                    </p>
-                    <p class="mt-4 text-gray-600">透過此流程，我們能精準追蹤每一位用戶的來源渠道及其在飛輪中各階段的轉換率，為後續的ROI評估與策略優化提供堅實的數據基礎。</p>
-                </div>
-                <!-- Appendix -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">附錄：「風控練習簿」任務執行SOP</h3>
-                    <p class="text-gray-600 mb-6">此SOP旨在確保核心任務的順暢執行與數據價值最大化。</p>
-                    <div class="space-y-6">
-                        <div class="p-4 border rounded-lg">
-                            <h4 class="font-semibold text-gray-700">第一部分：用戶執行流程</h4>
-                             <ol class="list-decimal list-inside mt-2 text-gray-600 space-y-1">
-                                <li><b>任務觸發：</b>用戶在活動網站看到任務要求與獎勵。</li>
-                                <li><b>執行交易：</b>用戶在CTA模擬平台中設定停損單。</li>
-                                <li><b>截圖存證：</b>用戶將「已平倉部位」中，因停損而出長的交易紀錄清晰截圖。</li>
-                                <li><b>社群分享：</b>用戶至LINE社群，上傳截圖並使用指定格式分享心得。</li>
+                    <div id="strategy-panel-5" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">董事會報告：長期價值與風險評估</h3>
+                        <p class="mb-6">為回應管理層對本計畫長期價值與風險的關切，我們已制定完整的補充報告。</p>
+                        <div class="space-y-4">
+                            <p><strong>我們的護城河：為何無法被輕易複製？</strong></p>
+                            <ol class="list-decimal list-inside ml-4 text-sm">
+                                <li><strong>數據驅動的內容引擎：</strong> 「新手失敗數據庫」將形成「數據越多，內容越強」的正向循環。</li>
+                                <li><strong>信任導向的社群文化：</strong> 建立一個鼓勵分享失敗、重視風控的社群，黏著度無法用金錢複製。</li>
+                                <li><strong>服務整合的客戶旅程：</strong> 打通部門牆，根據數據觸發營業員主動關懷，是最高的組織效率壁壘。</li>
                             </ol>
+                             <p><strong>風險預案：我們如何應對未知？</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>市場風險應對計畫 (黑天鵝事件):</strong> 市場劇烈波動時，溝通立即轉向風險教育，將危機轉為品牌信任的機會。</li>
+                                <li><strong>法規風險控管:</strong> 所有活動細節將提交法務與合規部門審核，取得正式「合規意見書」。</li>
+                            </ul>
+                             <p><strong>長期營運成本與規模化方案:</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>成本結構分析：</strong> 主要為固定人力成本，獎勵為變動成本，具備高度成本效益。</li>
+                                <li><strong>規模化方案 (Scalability Plan):</strong> 啟動「飛輪大使2.0計畫」，以「用戶自治」模式維持服務品質。</li>
+                            </ul>
+                            <p><strong>商業成功的衡量與確保:</strong></p>
+                             <ul class="list-disc list-inside ml-4 text-sm">
+                                <li><strong>最終衡量指標：</strong> 以**「各客戶分群的LTV/CAC比率」**作為最終指標，目標應遠大於3。</li>
+                                <li><strong>追蹤與報告機制：</strong> 建立「長期價值追蹤儀表板」，每季報告。</li>
+                                <li><strong>如何確保成功：</strong> 核心在於「失敗數據的戰略價值」，透過分析用戶失敗，持續優化服務，提升LTV。</li>
+                            </ul>
                         </div>
-                         <div class="p-4 border rounded-lg">
-                            <h4 class="font-semibold text-gray-700">第二部分：社群經理執行流程</h4>
-                             <ol class="list-decimal list-inside mt-2 text-gray-600 space-y-1">
-                                <li><b>每日巡查：</b>定時巡查社群中 `#風控練習簿` 的新貼文。</li>
-                                <li><b>審核貼文：</b>確認截圖真實性與心得內容。</li>
-                                <li><b>公開互動與獎勵：</b>在貼文下方公開給予正向回饋，並透過後台發放種子。</li>
-                                <li><b>數據標籤化：</b>將案例資訊（商品、虧損原因等）記錄至「新手失敗數據庫」。</li>
-                            </ol>
+                    </div>
+                    
+                    <div id="strategy-panel-6" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">飛輪數據指標 (KPI)</h3>
+                        <p class="mb-6">此圖表展示了計畫關鍵績效指標的「原始值」與「目標值」對比，以衡量計畫的商業成功。</p>
+                        <div class="relative h-96 w-full max-w-3xl mx-auto">
+                            <canvas id="kpiStrategyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- NEW: Cost & Benefit Panel -->
+                    <div id="strategy-panel-7" data-tab-group="strategy" class="strategy-tab-panel hidden">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">活動成本預估以及預期成果</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-3">活動成本預估 (三個月)</h4>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full w-full text-left">
+                                        <thead class="bg-gray-100">
+                                            <tr>
+                                                <th class="p-3 font-semibold">項目</th>
+                                                <th class="p-3 font-semibold">預估金額 (NTD)</th>
+                                                <th class="p-3 font-semibold">備註</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y">
+                                            <tr class="hover:bg-gray-50"><td class="p-3">行銷推廣費用</td><td class="p-3">250,000</td><td class="p-3">數位廣告、KOL合作</td></tr>
+                                            <tr class="hover:bg-gray-50"><td class="p-3">活動總獎勵</td><td class="p-3">180,000</td><td class="p-3">旅遊金、3C產品、禮券</td></tr>
+                                            <tr class="hover:bg-gray-50"><td class="p-3">人力與營運成本</td><td class="p-3">120,000</td><td class="p-3">社群經理、設計、雜支</td></tr>
+                                            <tr class="bg-gray-100 font-bold"><td class="p-3">總計</td><td class="p-3">550,000</td><td class="p-3"></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                             <div>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-3">預期成果指標</h4>
+                                <div class="overflow-x-auto">
+                                     <table class="min-w-full w-full text-left">
+                                        <thead class="bg-blue-100">
+                                            <tr>
+                                                <th class="p-3 font-semibold">項目</th>
+                                                <th class="p-3 font-semibold">目標</th>
+                                                <th class="p-3 font-semibold">衡量方式</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y">
+                                            <tr class="hover:bg-gray-50"><td class="p-3">總曝光數</td><td class="p-3">2,000,000+</td><td class="p-3">各媒體平台後台數據</td></tr>
+                                            <tr class="hover:bg-gray-50"><td class="p-3">新開戶數</td><td class="p-3">1,500 戶</td><td class="p-3">內部開戶系統統計</td></tr>
+                                            <tr class="hover:bg-gray-50"><td class="p-3">有效戶轉換率</td><td class="p-3">> 70%</td><td class="p-3">開戶後一個月內有交易</td></tr>
+                                            <tr class="hover:bg-gray-50"><td class="p-3">社群總人數</td><td class="p-3">3,000+</td><td class="p-3">LINE 社群後台</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 7: Board Report -->
-        <section id="board-report" class="mb-16 scroll-mt-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">董事會報告：長期價值與風險評估</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    為回應管理層對本計畫長期價值與風險的關切，我們已制定完整的補充報告，闡述本計畫的護城河、風險預案、成本結構及商業成功指標。
-                </p>
-            </div>
-            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200 space-y-10">
-                <!-- Moat -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-600 pl-4">一、 我們的護城河：為何無法被輕易複製？</h3>
-                    <p class="text-gray-600 mb-6">我們的競爭優勢並非單一功能，而是由數據、文化與組織效率三者結合而成的**系統性優勢**：</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>1. 數據驅動的內容引擎：</b>我們獨有的「新手失敗數據庫」將讓我們產出比對手更貼近用戶痛點的教學內容，形成「數據越多，內容越強」的正向循環。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>2. 信任導向的社群文化：</b>我們將建立一個鼓勵分享失敗、重視風控的「安全、誠實、共同成長」社群。這種基於信任的黏著度，無法用金錢複製。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>3. 服務整合的客戶旅程：</b>我們將打通部門牆，根據用戶數據觸發營業員進行主動關懷。這種組織性的運營效率是最高的競爭壁壘。</div>
-                    </div>
-                </div>
-                <!-- Risk Plan -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-600 pl-4">二、 風險預案：我們如何應對未知？</h3>
-                     <div class="space-y-4">
-                        <div class="p-4 bg-red-50 rounded-lg border border-red-200">
-                            <h4 class="font-bold text-red-800">市場風險應對計畫 (黑天鵝事件)</h4>
-                            <p class="mt-2 text-red-700">當市場出現劇烈波動時，社群溝通將立即轉向風險教育，官方帳戶將展示防禦性操作，將危機轉化為建立品牌信任的機會。</p>
-                        </div>
-                        <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                            <h4 class="font-bold text-yellow-800">法規風險控管</h4>
-                            <p class="mt-2 text-yellow-700">所有活動細節將在事前提交法務與合規部門審核，並取得正式的「合規意見書」，確保100%符合規範。</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Cost & Scalability -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-600 pl-4">三、 長期營運成本與規模化方案</h3>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>成本結構分析：</b>固定成本主要為1位社群經理及部分支援人力；所有獎勵皆為變動成本，與商業成果直接掛鉤，具備高度成本效益。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>規模化方案 (Scalability Plan)：</b>當社群人數擴大時，將啟動「飛輪大使2.0計畫」，遴選核心用戶作為榮譽大使協助社群運營，以「用戶自治」模式在不大幅增加人力的情況下維持服務品質。</div>
-                    </div>
-                </div>
-                <!-- Success Metrics -->
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-600 pl-4">四、 商業成功的衡量與確保</h3>
-                     <div class="space-y-4">
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>最終衡量指標：</b>我們將以<b>「各客戶分群的LTV/CAC比率」</b>（生命週期價值/獲客成本）作為衡量計畫成功的最終指標，目標此比率應遠大於3。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>追蹤與報告機制：</b>將建立「長期價值追蹤儀表板」，每季向董事會報告各客戶群的留存率、交易量貢獻與價值升級率。</div>
-                        <div class="p-4 bg-gray-50 rounded-lg"><b>如何確保成功：</b>計畫的成功保障來自於「失敗數據的戰略價值」。透過分析用戶失敗，我們能持續優化服務，從而提升客戶的LTV，確保計畫的長期商業成功。</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 8: Rewards and KPIs -->
-        <section id="rewards" class="scroll-mt-16">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">大獎機制與數據目標</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600">
-                    您的努力將獲得豐厚回報！這裡展示了最終的大獎以及我們期望透過此計畫達成的關鍵成長指標。您的每一次參與，都在為實現這些目標貢獻力量。
-                </p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
-                <!-- Grand Prizes -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">🎁 終極大獎（11/21 抽出）</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
-                        <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
-                            <p class="text-4xl mb-2">✈️</p>
-                            <h4 class="font-bold text-sky-800">海外雙人旅遊金</h4>
-                            <p class="text-sky-700">NT$80,000 (1名)</p>
-                        </div>
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <p class="text-4xl mb-2">💻</p>
-                            <h4 class="font-bold text-slate-800">高效能筆電</h4>
-                            <p class="text-slate-700">價值 NT$40,000 (1名)</p>
-                        </div>
-                        <div class="bg-violet-50 p-4 rounded-lg border border-violet-200">
-                            <p class="text-4xl mb-2">📱</p>
-                            <h4 class="font-bold text-violet-800">iPhone 最新款</h4>
-                            <p class="text-violet-700">價值 NT$30,000 (1名)</p>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                            <p class="text-4xl mb-2">🛍️</p>
-                            <h4 class="font-bold text-amber-800">超商禮券</h4>
-                            <p class="text-amber-700">NT$500 (20名)</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KPI Chart -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">📊 飛輪數據指標 (KPI)</h3>
-                    <div class="chart-container">
-                        <canvas id="kpiChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
@@ -638,131 +575,18 @@
     </footer>
 
     <script>
-        // This script runs after the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
             
-            // Data for the five stages of the flywheel
+            // Data for the five stages accordion
             const stagesData = [
-                {
-                    id: 'stage-1',
-                    title: '階段一｜吸引 Attract',
-                    theme: '孔子開講，期貨啟蒙',
-                    duration: '9/24 – 10/1',
-                    color: 'sky',
-                    purpose: '建立基本認知、解除恐懼心理，讓對期貨觀望的用戶願意踏出第一步。',
-                    painPoint: '對期貨一無所知、怕賠錢、不敢碰、不理解風險與獲利來源。',
-                    solution: '提供拆解成單元、附帶互動問答的「期貨入門指南」，搭配風險認知測驗，將被動學習轉為主動吸收。下一章，我們將帶您進入模擬戰場，選擇您感興趣的領域，親手體驗市場的脈動！',
-                    transition: '「期貨好像沒那麼可怕了」→「我應該也可以學」',
-                    tasks: [
-                        { name: '闖關式學習', desc: '完成《期貨入門指南》三大單元的互動問答，答對即可過關。', time: '約 15–20 分鐘', seeds: '30 顆' },
-                        { name: '風險認知小測驗', desc: '完成 20 題風險測驗，達 80 分即通過。', time: '約 10 分鐘', seeds: '30 顆' },
-                    ]
-                },
-                {
-                    id: 'stage-2',
-                    title: '階段二｜互動 Engage',
-                    theme: '三大戰場，擇你所愛',
-                    duration: '10/1 – 10/9',
-                    color: 'teal',
-                    purpose: '引導用戶根據自身興趣，選擇一個「主題戰場」進行模擬實戰，從而掌握通用於所有市場的交易技巧，並理解不同商品間的微妙連動關係。',
-                    painPoint: '市場商品太多，不知從何下手？只聽過科技股，但對黃金、外匯等全球脈動一竅不通？',
-                    solution: '我們為您開闢了三大戰場：【科技前線】、【能源風暴】、【貨幣戰爭】。您可以選擇最熟悉或最感興趣的領域開始，每個戰場都有專屬的英雄商品與對應的期貨關聯。熟悉一個，就能觸類旁通所有。',
-                    transition: '「原來不只科技股，黃金和油價也這麼刺激！」→「我開始建立自己的全球市場觀察雷達了」',
-                    tasks: [
-                        { name: '登入模擬戰情室', desc: '申請並登入群益CTA模擬交易帳號。', time: '群益CTA平台', seeds: '20 顆' },
-                        { name: '選擇你的主戰場', desc: '從「科技(如NVIDIA)」、「能源(如輕原油)」、「貨幣(如歐元)」三大戰場中，任選一個完成首次模擬下單。', time: '', seeds: '30 顆' },
-                        { name: '偵查期貨規格', desc: '前往群益官網，查詢你主戰場對應的「期貨商品」（如：小納斯達克/輕原油/歐元），並回答一個關於合約規格的簡單問題。', time: '群益官網', seeds: '40 顆' },
-                        { name: '設立防線', desc: '學會設定停損單，為你的模擬倉位做好風險控管。', time: '', seeds: '30 顆' },
-                        { name: '風控練習簿', desc: '在交易中，學會如何停損，遠比一次的獲利更重要。分享您練習停損的紀錄，這是在為您的資金建立最強大的防護網！', time: '截圖分享', seeds: '60 顆' },
-                        { name: '跨界探索', desc: '挑戰一個你「主戰場以外」的商品，完成一筆模擬下單。', time: '', seeds: '40 顆' },
-                    ]
-                },
-                {
-                    id: 'stage-3',
-                    title: '階段三｜轉換 Convert',
-                    theme: '實盤啟航，知識變現',
-                    duration: '10/10 – 10/22',
-                    color: 'emerald',
-                    purpose: '將模擬階段學到的知識，轉化為真實的行動。透過高額的開戶獎勵，強力推動用戶完成從入金到實盤交易的完整流程。',
-                    painPoint: '模擬交易跟實盤感覺不一樣？開戶流程好麻煩，沒有動力完成。',
-                    solution: '您在前兩階段的努力，將在此刻化為最實質的回饋！完成開戶是獲取 300 元禮券的最後一哩路，也是您從學員變身為實戰交易者的關鍵一步。',
-                    transition: '「原來我真的看懂期貨了」→「這不只是學習，我真的開始交易了」',
-                    tasks: [
-                        { name: '正式授旗', desc: '完成線上開戶（含證件驗證），這是您解鎖 300 元禮券的關鍵任務！', time: '群益官網', seeds: '130 顆' },
-                        { name: '注入燃油', desc: '任意金額完成首次入金。', time: '', seeds: '50 顆' },
-                        { name: '首航大捷', desc: '完成您的第一筆實盤交易（不限口數），立即領取豐厚種子獎勵，為您的交易之旅注入強力動能！', time: '', seeds: '150 顆' },
-                        { name: '加入實戰社群', desc: '恭喜開戶！立即加入官方 LINE 社群《#飛虎拓荒基地》，與戰友們交流。', time: '限開戶後加入', seeds: '50 顆' },
-                        { name: '限時首航', desc: '完成開戶後 48 小時內，完成第一筆實盤交易。', time: '', seeds: '50 顆' },
-                    ],
-                    advantages: [
-                        {
-                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h10l-1-1-0.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
-                            title: '頂尖交易工具',
-                            description: '最新上線的群益贏家PRO、群益行動贏家、掌中財神等多款APP任您挑選，更有24小時交易室隨時待命，不怕斷線或系統問題。'
-                        },
-                        {
-                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`,
-                            title: '獨家投顧報告',
-                            description: '每年僅需百元費用，即可享有專業研究員團隊提供的獨家投顧報告，讓您的交易決策有更強力的數據後盾。'
-                        },
-                        {
-                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
-                            title: '專業實戰社群',
-                            description: '加入我們重視風控、拒絕雜訊的實戰社群《#飛虎拓荒基地》，與真正的交易者為伍，共同成長。'
-                        }
-                    ]
-                },
-                {
-                    id: 'stage-4',
-                    title: '階段四｜取悅 Delight',
-                    theme: '策略聯盟，專業升級',
-                    duration: '10/23 – 10/31',
-                    color: 'amber',
-                    purpose: '強化操作頻率與社群認同，並為高潛力客戶提供一條通往專業投資的進階路徑，實現客戶價值最大化。',
-                    painPoint: '交易一段時間後遇到瓶頸、需要更專業的市場資訊、希望與同好有更深度的交流。',
-                    solution: '除了透過組隊挑戰維持交易熱度，我們更為積極的交易者，提供了升級為專業投資顧問服務客戶的機會，獲取獨家的研究報告與市場洞察。',
-                    transition: '「我不只是一個散戶，我能接觸到更專業的資源」',
-                    tasks: [
-                        { name: '基本挑戰(個人)', desc: '1. 三口實盤交易<br>2. 使用一次智慧單', time: '', seeds: '100 顆<br>50 顆' },
-                        { name: '組隊挑戰', desc: '組 3–5 人全員達標 → 全員達標後，每位成員額外獲得 150 顆種子與團隊勳章', time: '', seeds: '150 顆/人' },
-                        { name: '專業投資者升級', desc: '簽署投顧契約，解鎖群益獨家投顧報告閱覽權限，讓您的交易決策有更強力的後盾！', time: '線上簽署', seeds: '200 顆' },
-                    ]
-                },
-                {
-                    id: 'stage-5',
-                    title: '階段五｜推進 Advocate',
-                    theme: '飛輪大使招募',
-                    duration: '11/1 – 11/14',
-                    color: 'orange',
-                    purpose: '將滿意的用戶轉化為品牌最強力的推廣者，建立真實且具備擴散力的口碑循環。',
-                    painPoint: '雖然參與活動，但缺乏社群影響力或回饋誘因，不願主動分享。',
-                    solution: '我們不只提供獎勵，更提供一個讓您成為意見領袖的舞台。您的每一次成功推薦，都是在壯大我們的投資社群，我們將為此提供最豐厚的回饋。',
-                    transition: '「我不只從中獲益，更能幫助別人開始學投資」',
-                    tasks: [
-                        { 
-                            name: '飛輪大使任務', 
-                            desc: '透過您的專屬連結，成功推薦朋友開立群益期貨帳戶，您與朋友各得100顆種子。獎勵無上限！所有推薦紀錄將經官方審核，確保真實性。', 
-                            time: '專屬推薦連結', 
-                            seeds: '100 顆/人' 
-                        },
-                        {
-                            name: '首航獎勵',
-                            desc: '當您推薦的朋友完成他的第一筆實盤交易，您與朋友將再各得 NT$50 超商禮券！',
-                            time: '',
-                            seeds: '+ NT$50 禮券'
-                        },
-                        {
-                            name: '超級大使加碼',
-                            desc: '活動期間，成功推薦超過 10 位朋友完成開戶及首次交易，我們將額外加碼贈送您 NT$300 超商禮券！',
-                            time: '',
-                            seeds: '+ NT$300 禮券'
-                        },
-                        { name: '用戶故事投稿', desc: '依官方指南，投稿您在本次活動中，「如何從一個熟悉領域（如科技股、黃金）開始，學會觀察並理解期貨市場」的學習歷程（圖文或影片）。', time: '傳到LINE社群', seeds: '100 顆' },
-                    ]
-                }
+                { id: 'stage-1', title: '階段一｜吸引 Attract', theme: '孔子開講，期貨啟蒙', duration: '9/24 – 10/1', color: 'sky', purpose: '建立基本認知、解除恐懼心理，讓對期貨觀望的用戶願意踏出第一步。', painPoint: '對期貨一無所知、怕賠錢、不敢碰、不理解風險與獲利來源。', solution: '提供拆解成單元、附帶互動問答的「期貨入門指南」，搭配風險認知測驗，將被動學習轉為主動吸收。下一章，我們將帶您進入模擬戰場，選擇您感興趣的領域，親手體驗市場的脈動！', transition: '「期貨好像沒那麼可怕了」→「我應該也可以學」', tasks: [ { name: '闖關式學習', desc: '完成《期貨入門指南》三大單元的互動問答，答對即可過關。', time: '約 15–20 分鐘', seeds: '30 顆' }, { name: '風險認知小測驗', desc: '完成 20 題風險測驗，達 80 分即通過。', time: '約 10 分鐘', seeds: '30 顆' }, ] },
+                { id: 'stage-2', title: '階段二｜互動 Engage', theme: '三大戰場，擇你所愛', duration: '10/1 – 10/9', color: 'teal', purpose: '引導用戶根據自身興趣，選擇一個「主題戰場」進行模擬實戰，從而掌握通用於所有市場的交易技巧，並理解不同商品間的微妙連動關係。', painPoint: '市場商品太多，不知從何下手？只聽過科技股，但對黃金、外匯等全球脈動一竅不通？', solution: '我們為您開闢了三大戰場：【科技前線】、【能源風暴】、【貨幣戰爭】。您可以選擇最熟悉或最感興趣的領域開始，每個戰場都有專屬的英雄商品與對應的期貨關聯。熟悉一個，就能觸類旁通所有。', transition: '「原來不只科技股，黃金和油價也這麼刺激！」→「我開始建立自己的全球市場觀察雷達了」', tasks: [ { name: '登入模擬戰情室', desc: '申請並登入群益CTA模擬交易帳號。', time: '群益CTA平台', seeds: '20 顆' }, { name: '選擇你的主戰場', desc: '從「科技(如NVIDIA)」、「能源(如輕原油)」、「貨幣(如歐元)」三大戰場中，任選一個完成首次模擬下單。', time: '', seeds: '30 顆' }, { name: '偵查期貨規格', desc: '前往群益官網，查詢你主戰場對應的「期貨商品」（如：小納斯達克/輕原油/歐元），並回答一個關於合約規格的簡單問題。', time: '群益官網', seeds: '40 顆' }, { name: '設立防線', desc: '學會設定停損單，為你的模擬倉位做好風險控管。', time: '', seeds: '30 顆' }, { name: '風控練習簿', desc: '在交易中，學會如何停損，遠比一次的獲利更重要。分享您練習停損的紀錄，這是在為您的資金建立最強大的防護網！', time: '截圖分享', seeds: '60 顆' }, { name: '跨界探索', desc: '挑戰一個你「主戰場以外」的商品，完成一筆模擬下單。', time: '', seeds: '40 顆' }, ] },
+                { id: 'stage-3', title: '階段三｜轉換 Convert', theme: '實盤啟航，知識變現', duration: '10/10 – 10/22', color: 'emerald', purpose: '將模擬階段學到的知識，轉化為真實的行動。透過高額的開戶獎勵，強力推動用戶完成從入金到實盤交易的完整流程。', painPoint: '模擬交易跟實盤感覺不一樣？開戶流程好麻煩，沒有動力完成。', solution: '您在前兩階段的努力，將在此刻化為最實質的回饋！完成開戶是獲取 300 元禮券的最後一哩路，也是您從學員變身為實戰交易者的關鍵一步。', transition: '「原來我真的看懂期貨了」→「這不只是學習，我真的開始交易了」', tasks: [ { name: '正式授旗', desc: '完成線上開戶（含證件驗證），這是您解鎖 300 元禮券的關鍵任務！', time: '群益官網', seeds: '130 顆' }, { name: '注入燃油', desc: '任意金額完成首次入金。', time: '', seeds: '50 顆' }, { name: '首航大捷', desc: '完成您的第一筆實盤交易（不限口數），立即領取豐厚種子獎勵，為您的交易之旅注入強力動能！', time: '', seeds: '150 顆' }, { name: '加入實戰社群', desc: '恭喜開戶！立即加入官方 LINE 社群《#飛虎拓荒基地》，與戰友們交流。', time: '限開戶後加入', seeds: '50 顆' }, { name: '限時首航', desc: '完成開戶後 48 小時內，完成第一筆實盤交易。', time: '', seeds: '50 顆' }, ], advantages: [ { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h10l-1-1-0.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`, title: '頂尖交易工具', description: '最新上線的群益贏家PRO、群益行動贏家、掌中財神等多款APP任您挑選，更有24小時交易室隨時待命，不怕斷線或系統問題。' }, { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`, title: '獨家投顧報告', description: '每年僅需百元費用，即可享有專業研究員團隊提供的獨家投顧報告，讓您的交易決策有更強力的數據後盾。' }, { icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`, title: '專業實戰社群', description: '加入我們重視風控、拒絕雜訊的實戰社群《#飛虎拓荒基地》，與真正的交易者為伍，共同成長。' } ] },
+                { id: 'stage-4', title: '階段四｜取悅 Delight', theme: '策略聯盟，專業升級', duration: '10/23 – 10/31', color: 'amber', purpose: '強化操作頻率與社群認同，並為高潛力客戶提供一條通往專業投資的進階路徑，實現客戶價值最大化。', painPoint: '交易一段時間後遇到瓶頸、需要更專業的市場資訊、希望與同好有更深度的交流。', solution: '除了透過組隊挑戰維持交易熱度，我們更為積極的交易者，提供了升級為專業投資顧問服務客戶的機會，獲取獨家的研究報告與市場洞察。', transition: '「我不只是一個散戶，我能接觸到更專業的資源」', tasks: [ { name: '基本挑戰(個人)', desc: '1. 三口實盤交易<br>2. 使用一次智慧單', time: '', seeds: '100 顆<br>50 顆' }, { name: '組隊挑戰', desc: '組 3–5 人全員達標 → 全員達標後，每位成員額外獲得 150 顆種子與團隊勳章', time: '', seeds: '150 顆/人' }, { name: '專業投資者升級', desc: '簽署投顧契約，解鎖群益獨家投顧報告閱覽權限，讓您的交易決策有更強力的後盾！', time: '線上簽署', seeds: '200 顆' }, ] },
+                { id: 'stage-5', title: '階段五｜推進 Advocate', theme: '飛輪大使招募', duration: '11/1 – 11/14', color: 'orange', purpose: '將滿意的用戶轉化為品牌最強力的推廣者，建立真實且具備擴散力的口碑循環。', painPoint: '雖然參與活動，但缺乏社群影響力或回饋誘因，不願主動分享。', solution: '我們不只提供獎勵，更提供一個讓您成為意見領袖的舞台。您的每一次成功推薦，都是在壯大我們的投資社群，我們將為此提供最豐厚的回饋。', transition: '「我不只從中獲益，更能幫助別人開始學投資」', tasks: [ { name: '飛輪大使任務', desc: '透過您的專屬連結，成功推薦朋友開立群益期貨帳戶，您與朋友各得100顆種子。獎勵無上限！所有推薦紀錄將經官方審核，確保真實性。', time: '專屬推薦連結', seeds: '100 顆/人' }, { name: '首航獎勵', desc: '當您推薦的朋友完成他的第一筆實盤交易，您與朋友將再各得 NT$50 超商禮券！', time: '', seeds: '+ NT$50 禮券' }, { name: '超級大使加碼', desc: '活動期間，成功推薦超過 10 位朋友完成開戶及首次交易，我們將額外加碼贈送您 NT$300 超商禮券！', time: '', seeds: '+ NT$300 禮券' }, { name: '用戶故事投稿', desc: '依官方指南，投稿您在本次活動中，「如何從一個熟悉領域（如科技股、黃金）開始，學會觀察並理解期貨市場」的學習歷程（圖文或影片）。', time: '傳到LINE社群', seeds: '100 顆' }, ] }
             ];
 
-            // Dynamically create accordion items from the data
+            // Dynamically create accordion items
             const accordionContainer = document.getElementById('accordion-container');
             stagesData.forEach((stage, index) => {
                 const accordionItem = document.createElement('div');
@@ -771,22 +595,7 @@
                 
                 let advantagesHTML = '';
                 if (stage.advantages) {
-                    advantagesHTML = `
-                        <div class="mt-8 pt-6 border-t">
-                            <h4 class="font-bold text-lg text-center text-gray-800 mb-6">選擇群益，您將獲得三大優勢</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                                ${stage.advantages.map(adv => `
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="flex justify-center items-center h-12 w-12 bg-blue-100 rounded-full mx-auto">
-                                            ${adv.icon}
-                                        </div>
-                                        <h5 class="font-bold text-gray-800 mt-3">${adv.title}</h5>
-                                        <p class="text-sm text-gray-600 mt-1">${adv.description}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
+                    advantagesHTML = `<div class="mt-8 pt-6 border-t"><h4 class="font-bold text-lg text-center text-gray-800 mb-6">選擇群益，您將獲得三大優勢</h4><div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">${stage.advantages.map(adv => `<div class="bg-gray-50 p-4 rounded-lg"><div class="flex justify-center items-center h-12 w-12 bg-blue-100 rounded-full mx-auto">${adv.icon}</div><h5 class="font-bold text-gray-800 mt-3">${adv.title}</h5><p class="text-sm text-gray-600 mt-1">${adv.description}</p></div>`).join('')}</div></div>`;
                 }
 
                 accordionItem.innerHTML = `
@@ -798,28 +607,16 @@
                                 <p class="text-sm text-gray-500">${stage.duration}</p>
                             </div>
                         </div>
-                        <svg class="accordion-arrow w-6 h-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <svg class="accordion-arrow w-6 h-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                     </button>
                     <div class="accordion-content">
                         <div class="p-6 border-t border-gray-200">
                             <p class="text-center text-xl font-bold text-${stage.color}-600 mb-6">✨ ${stage.theme} ✨</p>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-sm">
-                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
-                                    <h4 class="font-bold mb-2 text-${stage.color}-800">🎯 活動目的</h4>
-                                    <p class="text-${stage.color}-700">${stage.purpose}</p>
-                                </div>
-                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
-                                    <h4 class="font-bold mb-2 text-${stage.color}-800">😟 用戶痛點</h4>
-                                    <p class="text-${stage.color}-700">${stage.painPoint}</p>
-                                </div>
-                                <div class="bg-${stage.color}-50 p-4 rounded-lg">
-                                    <h4 class="font-bold mb-2 text-${stage.color}-800">✅ 解決方式</h4>
-                                    <p class="text-${stage.color}-700">${stage.solution}</p>
-                                </div>
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg"><h4 class="font-bold mb-2 text-${stage.color}-800">🎯 活動目的</h4><p class="text-${stage.color}-700">${stage.purpose}</p></div>
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg"><h4 class="font-bold mb-2 text-${stage.color}-800">😟 用戶痛點</h4><p class="text-${stage.color}-700">${stage.painPoint}</p></div>
+                                <div class="bg-${stage.color}-50 p-4 rounded-lg"><h4 class="font-bold mb-2 text-${stage.color}-800">✅ 解決方式</h4><p class="text-${stage.color}-700">${stage.solution}</p></div>
                             </div>
-                            
                             <h4 class="font-bold text-lg text-gray-800 mb-4">📌 任務內容</h4>
                             <div class="overflow-x-auto">
                                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
@@ -832,38 +629,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        ${stage.tasks.map(task => `
-                                        <tr class="hover:bg-gray-50">
-                                            <td class="py-3 px-4 border-b text-sm text-gray-700 font-medium">${task.name}</td>
-                                            <td class="py-3 px-4 border-b text-sm text-gray-700">${task.desc}</td>
-                                            <td class="py-3 px-4 border-b text-sm text-gray-700">${task.time}</td>
-                                            <td class="py-3 px-4 border-b text-sm text-green-700 font-bold">${task.seeds}</td>
-                                        </tr>
-                                        `).join('')}
+                                        ${stage.tasks.map(task => `<tr class="hover:bg-gray-50"><td class="py-3 px-4 border-b text-sm text-gray-700 font-medium">${task.name}</td><td class="py-3 px-4 border-b text-sm text-gray-700">${task.desc}</td><td class="py-3 px-4 border-b text-sm text-gray-700">${task.time}</td><td class="py-3 px-4 border-b text-sm text-green-700 font-bold">${task.seeds}</td></tr>`).join('')}
                                     </tbody>
                                 </table>
                             </div>
                             ${advantagesHTML}
-                            <div class="mt-8 text-center bg-gray-100 p-4 rounded-lg">
-                                <p class="text-gray-500 text-sm mb-1">用戶心理轉折</p>
-                                <p class="font-semibold text-gray-800">“${stage.transition}”</p>
-                            </div>
+                            <div class="mt-8 text-center bg-gray-100 p-4 rounded-lg"><p class="text-gray-500 text-sm mb-1">用戶心理轉折</p><p class="font-semibold text-gray-800">“${stage.transition}”</p></div>
                         </div>
                     </div>
                 `;
                 accordionContainer.appendChild(accordionItem);
             });
 
-            // Add click event listeners to all accordion buttons
+            // Accordion functionality
             const accordionButtons = document.querySelectorAll('.accordion-button');
             accordionButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const content = button.nextElementSibling;
                     const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
                     button.setAttribute('aria-expanded', !isExpanded);
                     button.querySelector('.accordion-arrow').classList.toggle('rotate-180', !isExpanded);
-                    
                     if (!isExpanded) {
                         content.style.maxHeight = content.scrollHeight + 'px';
                     } else {
@@ -872,107 +657,40 @@
                 });
             });
 
-            // Leaderboard Tabs Functionality
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabPanels = document.querySelectorAll('.tab-panel');
-
+            // Tab functionality for multiple groups
+            const tabButtons = document.querySelectorAll('.tab-button, .strategy-tab-button');
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Deactivate all buttons
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('tab-active');
-                        btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300', 'border-transparent');
+                    const group = button.dataset.tabGroup;
+                    
+                    document.querySelectorAll(`[data-tab-group="${group}"]`).forEach(btn => {
+                        if (btn.classList.contains('tab-button')) {
+                             btn.classList.remove('tab-active');
+                        } else {
+                             btn.classList.remove('strategy-tab-active');
+                        }
                     });
-                    // Activate clicked button
-                    button.classList.add('tab-active');
-                    button.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300', 'border-transparent');
 
-                    // Hide all panels
-                    tabPanels.forEach(panel => {
+                     if (button.classList.contains('tab-button')) {
+                        button.classList.add('tab-active');
+                    } else {
+                        button.classList.add('strategy-tab-active');
+                    }
+
+                    document.querySelectorAll(`.tab-panel[data-tab-group="${group}"], .strategy-tab-panel[data-tab-group="${group}"]`).forEach(panel => {
                         panel.classList.add('hidden');
                     });
 
-                    // Show target panel
                     const targetPanelId = button.id.replace('tab-', 'panel-');
                     document.getElementById(targetPanelId).classList.remove('hidden');
                 });
             });
-            // Set initial active tab
+
+            // Set initial active tabs
             document.getElementById('tab-individual').click();
+            document.getElementById('strategy-tab-1').click();
 
-
-            // Data for the KPI chart
-            const kpiData = {
-                labels: ['模擬開帳轉換率', '有效開戶轉換率', '第三週交易留存', '社群發文活性', '用戶推薦率', '活動後用戶留存'],
-                datasets: [
-                    {
-                        label: '原始值',
-                        data: [15, 6.5, 12.5, 0, 0, 0],
-                        backgroundColor: 'rgba(156, 163, 175, 0.6)',
-                        borderColor: 'rgba(156, 163, 175, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '目標值',
-                        data: [35, 13.5, 40, 30, 15, 50],
-                        backgroundColor: 'rgba(37, 99, 235, 0.6)',
-                        borderColor: 'rgba(37, 99, 235, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            };
-
-            // Initialize the KPI chart using Chart.js
-            const kpiCtx = document.getElementById('kpiChart').getContext('2d');
-            new Chart(kpiCtx, {
-                type: 'bar',
-                data: kpiData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%'
-                                }
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                // Shorten long labels on the x-axis for better readability
-                                callback: function(val, index) {
-                                    const label = this.getLabelForValue(val);
-                                    return label.length > 5 ? label.substring(0,5) + '...' : label;
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                             callbacks: {
-                                // Customize tooltip to show percentage
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += context.parsed.y + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Mobile menu toggle functionality
+            // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
@@ -981,8 +699,8 @@
                 mobileMenuButton.querySelector('.hidden').classList.toggle('hidden');
             });
             
-            // Close mobile menu when a nav link is clicked
-            document.querySelectorAll('.nav-link, .flywheel-segment').forEach(link => {
+            // Close mobile menu on nav link click
+            document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', () => {
                     if (!mobileMenu.classList.contains('hidden')) {
                        mobileMenu.classList.add('hidden');
@@ -991,7 +709,58 @@
                     }
                 });
             });
+
+            // KPI Strategy Chart
+            const kpiCtx = document.getElementById('kpiStrategyChart').getContext('2d');
+            new Chart(kpiCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['模擬開帳轉換率', '有效開戶轉換率', '第三週交易留存', '社群發文活性', '用戶推薦率', '活動後用戶留存'],
+                    datasets: [
+                        {
+                            label: '原始值',
+                            data: [15, 6.5, 12.5, 0, 0, 0], // Representing '-' as 0
+                            backgroundColor: 'rgba(156, 163, 175, 0.6)',
+                            borderColor: 'rgba(156, 163, 175, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: '目標值',
+                            data: [35, 13.5, 40, 30, 15, 50],
+                            backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                            borderColor: 'rgba(37, 99, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return value + '%' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) { label += context.parsed.y + '%'; }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         });
     </script>
 </body>
 </html>
+
