@@ -71,6 +71,7 @@
                         <a href="#flywheel-model" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">飛輪模型</a>
                         <a href="#stages" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">五大階段</a>
                         <a href="#strategy" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">戰略方針</a>
+                        <a href="#execution-plan" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">執行計畫</a>
                         <a href="#board-report" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">董事會報告</a>
                         <a href="#rewards" class="nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">獎勵目標</a>
                     </div>
@@ -92,6 +93,7 @@
                 <a href="#flywheel-model" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">飛輪模型</a>
                 <a href="#stages" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">五大階段</a>
                 <a href="#strategy" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">戰略方針</a>
+                <a href="#execution-plan" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">執行計畫</a>
                 <a href="#board-report" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">董事會報告</a>
                 <a href="#rewards" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">獎勵目標</a>
             </div>
@@ -500,6 +502,31 @@
                     </p>
                     <p class="mt-4 text-gray-600">透過此流程，我們能精準追蹤每一位用戶的來源渠道及其在飛輪中各階段的轉換率，為後續的ROI評估與策略優化提供堅實的數據基礎。</p>
                 </div>
+                <!-- Appendix -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-4">附錄：「風控練習簿」任務執行SOP</h3>
+                    <p class="text-gray-600 mb-6">此SOP旨在確保核心任務的順暢執行與數據價值最大化。</p>
+                    <div class="space-y-6">
+                        <div class="p-4 border rounded-lg">
+                            <h4 class="font-semibold text-gray-700">第一部分：用戶執行流程</h4>
+                             <ol class="list-decimal list-inside mt-2 text-gray-600 space-y-1">
+                                <li><b>任務觸發：</b>用戶在活動網站看到任務要求與獎勵。</li>
+                                <li><b>執行交易：</b>用戶在CTA模擬平台中設定停損單。</li>
+                                <li><b>截圖存證：</b>用戶將「已平倉部位」中，因停損而出長的交易紀錄清晰截圖。</li>
+                                <li><b>社群分享：</b>用戶至LINE社群，上傳截圖並使用指定格式分享心得。</li>
+                            </ol>
+                        </div>
+                         <div class="p-4 border rounded-lg">
+                            <h4 class="font-semibold text-gray-700">第二部分：社群經理執行流程</h4>
+                             <ol class="list-decimal list-inside mt-2 text-gray-600 space-y-1">
+                                <li><b>每日巡查：</b>定時巡查社群中 `#風控練習簿` 的新貼文。</li>
+                                <li><b>審核貼文：</b>確認截圖真實性與心得內容。</li>
+                                <li><b>公開互動與獎勵：</b>在貼文下方公開給予正向回饋，並透過後台發放種子。</li>
+                                <li><b>數據標籤化：</b>將案例資訊（商品、虧損原因等）記錄至「新手失敗數據庫」。</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -666,6 +693,23 @@
                         { name: '首航大捷', desc: '完成您的第一筆實盤交易（不限口數），立即領取豐厚種子獎勵，為您的交易之旅注入強力動能！', time: '', seeds: '150 顆' },
                         { name: '加入實戰社群', desc: '恭喜開戶！立即加入官方 LINE 社群《#飛虎拓荒基地》，與戰友們交流。', time: '限開戶後加入', seeds: '50 顆' },
                         { name: '限時首航', desc: '完成開戶後 48 小時內，完成第一筆實盤交易。', time: '', seeds: '50 顆' },
+                    ],
+                    advantages: [
+                        {
+                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h10l-1-1-0.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+                            title: '頂尖交易工具',
+                            description: '最新上線的群益贏家PRO、群益行動贏家、掌中財神等多款APP任您挑選，更有24小時交易室隨時待命，不怕斷線或系統問題。'
+                        },
+                        {
+                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`,
+                            title: '獨家投顧報告',
+                            description: '每年僅需百元費用，即可享有專業研究員團隊提供的獨家投顧報告，讓您的交易決策有更強力的數據後盾。'
+                        },
+                        {
+                            icon: `<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+                            title: '專業實戰社群',
+                            description: '加入我們重視風控、拒絕雜訊的實戰社群《#飛虎拓荒基地》，與真正的交易者為伍，共同成長。'
+                        }
                     ]
                 },
                 {
@@ -724,7 +768,27 @@
                 const accordionItem = document.createElement('div');
                 accordionItem.id = stage.id;
                 accordionItem.className = 'border border-gray-200 rounded-xl bg-white shadow-sm scroll-mt-20';
-                // Using template literals to build the inner HTML of the accordion item
+                
+                let advantagesHTML = '';
+                if (stage.advantages) {
+                    advantagesHTML = `
+                        <div class="mt-8 pt-6 border-t">
+                            <h4 class="font-bold text-lg text-center text-gray-800 mb-6">選擇群益，您將獲得三大優勢</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                                ${stage.advantages.map(adv => `
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="flex justify-center items-center h-12 w-12 bg-blue-100 rounded-full mx-auto">
+                                            ${adv.icon}
+                                        </div>
+                                        <h5 class="font-bold text-gray-800 mt-3">${adv.title}</h5>
+                                        <p class="text-sm text-gray-600 mt-1">${adv.description}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
                 accordionItem.innerHTML = `
                     <button class="accordion-button w-full flex justify-between items-center text-left p-5" aria-expanded="false">
                         <div class="flex items-center">
@@ -779,6 +843,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            ${advantagesHTML}
                             <div class="mt-8 text-center bg-gray-100 p-4 rounded-lg">
                                 <p class="text-gray-500 text-sm mb-1">用戶心理轉折</p>
                                 <p class="font-semibold text-gray-800">“${stage.transition}”</p>
@@ -930,5 +995,3 @@
     </script>
 </body>
 </html>
-
-
