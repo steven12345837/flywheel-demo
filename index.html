@@ -9,10 +9,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Calm Harmony -->
-    <!-- Application Structure Plan: 本應用程式採用了以使用者旅程為核心的頂層導航設計，分為「策略總覽」、「五大階段詳解」與「獎勵與目標」三大區塊。使用者首先會看到計畫核心的「飛輪模型」互動圖，點擊即可導航至對應的詳細階段，這種設計能讓使用者快速建立整體概念，並自由探索感興趣的環節。各階段任務使用摺疊式卡片（Accordion）呈現，避免資訊過載，提升閱讀體驗。最終，透過視覺化的圖表展示KPI目標，強化計畫的預期成效。此結構旨在將線性報告轉化為非線性的互動探索地圖，提升可用性與參與感。 -->
-    <!-- Visualization & Content Choices: 報告核心的「Flywheel 模型」透過HTML/CSS建構成一個互動式圓環圖，取代靜態圖片，點擊各環節可導航至頁面相應部分，目標是組織化呈現並引導使用者。各階段任務細節使用HTML表格呈現，清晰易讀。關鍵的「飛輪數據指標」則利用Chart.js的條形圖進行視覺化比較，將原始值與目標值並列，目標是直觀對比與展示變化，互動式提示框可顯示精確數據。此設計選擇完全基於互動性與資訊清晰度，確保所有圖形皆由Canvas或HTML/CSS實現。 -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- 
+      - Application Structure Plan: 
+      - 本應用程式採用了以使用者旅程為核心的頂層導航設計，分為「策略總覽」、「五大階段詳解」與「獎勵與目標」三大區塊。
+      - 使用者首先會看到計畫核心的「飛輪模型」互動圖，點擊即可導航至對應的詳細階段，這種設計能讓使用者快速建立整體概念，並自由探索感興趣的環節。
+      - 各階段任務使用摺疊式卡片（Accordion）呈現，避免資訊過載，提升閱讀體驗。
+      - 最終，透過視覺化的圖表展示KPI目標，強化計畫的預期成效。
+      - 此結構旨在將線性報告轉化為非線性的互動探索地圖，提升可用性與參與感。
+    -->
+    <!-- 
+      - Visualization & Content Choices: 
+      - 報告核心的「Flywheel 模型」透過HTML/CSS建構成一個互動式圓環圖，取代靜態圖片，點擊各環節可導航至頁面相應部分，目標是組織化呈現並引導使用者。
+      - 各階段任務細節使用HTML表格呈現，清晰易讀。
+      - 關鍵的「飛輪數據指標」則利用Chart.js的條形圖進行視覺化比較，將原始值與目標值並列，目標是直觀對比與展示變化，互動式提示框可顯示精確數據。
+      - 此設計選擇完全基於互動性與資訊清晰度，確保所有圖形皆由Canvas或HTML/CSS實現。
+    -->
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -45,11 +56,6 @@
             height: 400px;
             max-height: 50vh;
         }
-        .tab-active {
-            border-color: #1D4ED8;
-            background-color: #1D4ED8;
-            color: #FFFFFF;
-        }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -59,6 +65,7 @@
 </head>
 <body class="bg-[#F8F7F4]">
 
+    <!-- Header and Navigation -->
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -82,6 +89,7 @@
                 </div>
             </div>
         </nav>
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#overview" class="block nav-link text-gray-700 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-md text-base font-medium">策略總覽</a>
@@ -91,8 +99,10 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
+        <!-- Section 1: Overview -->
         <section id="overview" class="mb-16 scroll-mt-16">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">策略總覽：Flywheel 成長飛輪</h2>
@@ -102,6 +112,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Interactive Flywheel -->
                 <div class="flex justify-center items-center">
                     <div class="relative flywheel-container flex items-center justify-center">
                         <div class="absolute w-full h-full rounded-full border-2 border-dashed border-gray-300"></div>
@@ -143,27 +154,27 @@
                     </div>
                 </div>
 
+                <!-- UPDATED Points System -->
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
-                    <h3 class="text-2xl font-bold text-blue-900 mb-4">活動核心：財富種子積分系統 🌱</h3>
-                    <p class="text-gray-600 mb-6">「財富種子」是您在這次成長旅程中的核心貨幣。完成各階段任務即可輕鬆獲取，它不僅記錄您的學習進度，更是兌換豐富獎勵的憑證。</p>
+                    <h3 class="text-2xl font-bold text-blue-900 mb-4">如何使用您的財富種子 🌱</h3>
+                    <p class="text-gray-600 mb-6">完成任務累積的「財富種子」是您兌換獎勵的唯一憑證。規則簡單明瞭：</p>
                     <div class="space-y-4">
-                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                            <h4 class="font-bold text-blue-800">保證兌換</h4>
-                            <p class="text-blue-700">累積 <span class="font-bold text-lg">300</span> 顆種子，即可兌換 NT$300 超商禮券（每人限一次）。</p>
+                        <div class="p-4 bg-blue-50 rounded-lg border-2 border-blue-300 shadow-md">
+                            <h4 class="font-bold text-blue-800 text-lg">第一重：新手保證獎勵</h4>
+                            <p class="text-blue-700 mt-1">累積滿 <span class="font-bold text-xl text-blue-900">300</span> 顆種子，就保證能兌換 <span class="font-bold text-xl text-blue-900">NT$300</span> 超商禮券！</p>
+                            <p class="text-xs text-gray-500 mt-2">（每位用戶限兌換一次）</p>
                         </div>
-                        <div class="p-4 bg-green-50 rounded-lg border border-green-200">
-                            <h4 class="font-bold text-green-800">大獎抽獎</h4>
-                            <p class="text-green-700">每 <span class="font-bold text-lg">100</span> 顆種子可兌換 1 張抽獎券，兌換無上限，衝刺大獎！</p>
-                        </div>
-                        <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                            <h4 class="font-bold text-yellow-800">種子商城</h4>
-                            <p class="text-yellow-700">可使用種子兌換群益獨家分析報告、課程折扣碼或品牌周邊商品。</p>
+                        <div class="p-4 bg-green-50 rounded-lg border-2 border-green-300 shadow-md">
+                            <h4 class="font-bold text-green-800 text-lg">第二重：衝刺終極大獎</h4>
+                            <p class="text-green-700 mt-1">兌換完保證獎勵後，剩下的種子將全部用來兌換抽獎券，每 <span class="font-bold text-xl text-green-900">100</span> 顆種子兌換 <span class="font-bold text-xl text-green-900">1</span> 張抽獎券，讓您有機會抽中海外旅遊金、iPhone等終極大獎！</p>
+                             <p class="text-xs text-gray-500 mt-2">（兌換無上限，累積越多中獎機會越高！）</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Section 2: Stages -->
         <section id="stages" class="mb-16 scroll-mt-16">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">五大活動階段詳解</h2>
@@ -172,9 +183,11 @@
                 </p>
             </div>
             <div id="accordion-container" class="space-y-4 max-w-4xl mx-auto">
+                <!-- Accordion items will be injected here by JavaScript -->
             </div>
         </section>
 
+        <!-- Section 3: Rewards and KPIs -->
         <section id="rewards" class="scroll-mt-16">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">大獎機制與數據目標</h2>
@@ -183,6 +196,7 @@
                 </p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+                <!-- Grand Prizes -->
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
                     <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">🎁 終極大獎（11/21 抽出）</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
@@ -209,6 +223,7 @@
                     </div>
                 </div>
 
+                <!-- KPI Chart -->
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200">
                     <h3 class="text-2xl font-bold text-center text-blue-900 mb-6">📊 飛輪數據指標 (KPI)</h3>
                     <div class="chart-container">
@@ -219,6 +234,7 @@
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white mt-16">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <p>&copy; 2025 群益期貨 Flywheel 養成計畫. 本頁面為計畫概念展示。</p>
@@ -226,7 +242,10 @@
     </footer>
 
     <script>
+        // This script runs after the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
+            
+            // Data for the five stages of the flywheel
             const stagesData = [
                 {
                     id: 'stage-1',
@@ -246,18 +265,18 @@
                 {
                     id: 'stage-2',
                     title: '階段二｜互動 Engage',
-                    theme: '十萬美金，模擬海戰',
+                    theme: '全球戰場，模擬實訓',
                     duration: '10/1 – 10/9',
                     color: 'teal',
-                    purpose: '提供零風險練習空間，強化下單與停損概念。',
+                    purpose: '在正式進入期貨市場前，透過交易全球市場的差價合約(CFD)來演練核心交易技巧，強化下單、風控與市場分析的實戰能力。',
                     painPoint: '開戶前不知道怎麼操作、怕操作錯誤、不了解停損單、對工具不熟。',
-                    solution: '建立模擬帳戶給用戶「無風險試玩」，並在平台中內建彈出式「新手任務引導」與即時獎勵回饋，設定操作任務與停損練習。',
-                    transition: '「這平台我摸得懂」→「我開始有信心操作了」',
+                    solution: '使用功能強大的「群益CTA」平台，申請模擬帳號。該平台可親身體驗全球最大交易市場，雖然是CFD，但其操作邏輯、看盤技巧、風險管理與期貨完全通用，是最佳的期貨前哨戰。',
+                    transition: '「原來交易全球指數、黃金是這種感覺」→「我對下單更有信心了」',
                     tasks: [
-                        { name: '創建艦隊', desc: '開設模擬交易帳號（內建虛擬10萬美金）。', time: '群益模擬平台', seeds: '30 顆' },
-                        { name: '首次啟航', desc: '完成第一筆模擬下單。', time: '', seeds: '30 顆' },
-                        { name: '設立航標', desc: '設定停損單（智慧單/觸價單）。', time: '', seeds: '40 顆' },
-                        { name: '模擬航海王', desc: '累積模擬下單 20 筆以上。', time: '', seeds: '加碼 50 顆' },
+                        { name: '登入CTA戰情室', desc: '申請並登入群益CTA模擬交易帳號。', time: '群益CTA平台', seeds: '30 顆' },
+                        { name: '牛刀小試', desc: '完成第一筆「指數(如道瓊、標普500)」或「商品(如黃金、輕原油)」CFD模擬下單。', time: '', seeds: '30 顆' },
+                        { name: '設立安全索', desc: '學會設定停損單，為你的模擬倉位做好風險控管。', time: '', seeds: '40 顆' },
+                        { name: '環遊世界', desc: '累積模擬下單 20 筆以上，涵蓋「外匯、商品、指數、美股」至少三種類別。', time: '', seeds: '加碼 50 顆' },
                     ]
                 },
                 {
@@ -304,18 +323,26 @@
                     solution: '提供明確的「心得投稿指南」、好友推薦積分、社群轉發任務等誘因，讓口碑成為自轉引擎來源。',
                     transition: '「我也能幫助別人開始學投資」',
                     tasks: [
-                        { name: '推薦任務', desc: '專屬連結邀請朋友開設模擬帳號並操作 1 筆。', time: '', seeds: '你與朋友各得 50 顆' },
+                        // UPDATED Referral Task
+                        { 
+                            name: '好友推薦任務', 
+                            desc: '成功推薦朋友開立群益期貨帳戶，您與朋友各得100顆種子。當朋友完成首次交易，雙方再各得NT$50超商禮券！', 
+                            time: '透過專屬連結', 
+                            seeds: '100 顆 + <br>NT$50 禮券' 
+                        },
                         { name: '用戶故事投稿', desc: '依官方提供的「心得指南」投稿學習歷程（圖文或影片）。', time: '傳到LINE社群', seeds: '100 顆' },
                         { name: 'IG/Threads 分享', desc: '發文＋標註指定 Hashtag (#群益飛虎)。', time: '', seeds: '每篇 50 顆 (上限3篇)' },
                     ]
                 }
             ];
 
+            // Dynamically create accordion items from the data
             const accordionContainer = document.getElementById('accordion-container');
             stagesData.forEach((stage, index) => {
                 const accordionItem = document.createElement('div');
                 accordionItem.id = stage.id;
                 accordionItem.className = 'border border-gray-200 rounded-xl bg-white shadow-sm scroll-mt-20';
+                // Using template literals to build the inner HTML of the accordion item
                 accordionItem.innerHTML = `
                     <button class="accordion-button w-full flex justify-between items-center text-left p-5" aria-expanded="false">
                         <div class="flex items-center">
@@ -380,6 +407,7 @@
                 accordionContainer.appendChild(accordionItem);
             });
 
+            // Add click event listeners to all accordion buttons
             const accordionButtons = document.querySelectorAll('.accordion-button');
             accordionButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -397,6 +425,7 @@
                 });
             });
 
+            // Data for the KPI chart
             const kpiData = {
                 labels: ['模擬開帳轉換率', '有效開戶轉換率', '第三週交易留存', '社群發文活性', '用戶推薦率', '活動後用戶留存'],
                 datasets: [
@@ -417,6 +446,7 @@
                 ]
             };
 
+            // Initialize the KPI chart using Chart.js
             const kpiCtx = document.getElementById('kpiChart').getContext('2d');
             new Chart(kpiCtx, {
                 type: 'bar',
@@ -435,6 +465,7 @@
                         },
                         x: {
                             ticks: {
+                                // Shorten long labels on the x-axis for better readability
                                 callback: function(val, index) {
                                     const label = this.getLabelForValue(val);
                                     return label.length > 5 ? label.substring(0,5) + '...' : label;
@@ -448,6 +479,7 @@
                         },
                         tooltip: {
                              callbacks: {
+                                // Customize tooltip to show percentage
                                 label: function(context) {
                                     let label = context.dataset.label || '';
                                     if (label) {
@@ -464,6 +496,7 @@
                 }
             });
 
+            // Mobile menu toggle functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
@@ -472,6 +505,7 @@
                 mobileMenuButton.querySelector('.hidden').classList.toggle('hidden');
             });
             
+            // Close mobile menu when a nav link is clicked
             document.querySelectorAll('.nav-link, .flywheel-segment').forEach(link => {
                 link.addEventListener('click', () => {
                     if (!mobileMenu.classList.contains('hidden')) {
